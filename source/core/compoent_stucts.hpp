@@ -12,10 +12,16 @@
 */
 
 //--------------------------------------------------------------------------||
+
+#include "utilityz/enumz_et_defultz.hpp"
+
+#include <unordered_map>
+
 struct allprices{
 
 	long last_update; 
-	std::unordered_map<std::string, double> price_by_smyb;
+	//std::unordered_map<std::string, double> price_by_symb;
+	std::unordered_map<Symbol_Tag, double> price_by_symb;
 };
 
 

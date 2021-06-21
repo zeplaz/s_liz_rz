@@ -23,7 +23,7 @@ enum class Systems_Online : uint32_t;
 namespace Utility 
 {
 	std::string Symbol_Tag_to_string(Symbol_Tag in_tag); //->DEFINED IN:
-
+	Symbol_Tag  string_to_symbol(std::string symbol);
 	std::string which_systems(Systems_Online sym_comp);
 }
 

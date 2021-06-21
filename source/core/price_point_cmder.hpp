@@ -38,20 +38,19 @@ struct ticker_notify{
 };
 
 
-
-
 typedef std::pair<Symbol_Tag,alert_price> alert_pair; 
 typedef std::forward_list<alert_pair>::iterator fl_ap_it;
+
 struct price_cmder
 {
 	private:
 	std::forward_list<alert_pair> fl_alert_p; 
 	std::priority_queue<ticker_notify> ticker_notify_pq;
-	allprices current_price_list;
+	allprices current_price;
 
 	public:
 	
-	void create_price_alert(Symbol_Tag in_tag, double price, bool is_low)
+	void create_price_alert(Symbol_Tag& in_tag, double price, bool is_low)
 	{
 		#ifdef DEBUG_01
 		std::cout << "\n###----<<<>>>>>create_price_alert\n";
@@ -63,7 +62,7 @@ struct price_cmder
 		fl_alert_p.emplace_front( in_tag,wp);
 
 	}
-	void add_ticker_notify(Symbol_Tag in_tag, Period_Mili interval);
+	void add_ticker_notify(Symbol_Tag& in_tag, Period_Mili interval);
 	
 	inline fl_ap_it alert_price_begin()
 	{
@@ -76,6 +75,20 @@ struct price_cmder
 	}
 
 
+	double get_cashed_price(Symbol_Tag& in_tag)
+	{
+		std::unordered_map<Symbol_Tag,double>::const_iterator got = current_price.price_by_symb.find(in_tag);
+
+	 if ( got == current_price.price_by_symb.end())
+	 {
+	    std::cerr << "##NOTFOUND-->get_cashed_price::current_price::not found\n";
+	 }
+	 else 
+	 {
+	 	return got->second;
+	 }
+	  return -1.0;
+	 }	
 };
 
 

@@ -2,8 +2,6 @@
 #define SLAZERZ_01_BINANCE_MGMT_001_HPP
 
 
-
-
 #define KGRN "\033[0;32;32m"
 #define KCYN "\033[0;36m"
 #define KRED "\033[0;32;31m"
@@ -30,7 +28,7 @@
 struct price_point_dtp; 
 struct price_point_dl;
 struct allprices;
-
+ 
 template <typename>
 struct streamed_channel;
 

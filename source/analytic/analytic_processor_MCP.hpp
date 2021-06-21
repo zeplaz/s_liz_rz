@@ -17,7 +17,7 @@
 //class price_cmder;
 class analytic_processor
 {
-	public :  
+	private :  
 
 	// gui_mgmt* ptr_gui_mgmt = nullptr; 
 	 binance_mgmt mbinac_mgmt;
@@ -28,13 +28,14 @@ class analytic_processor
 	//void add_price_alert(Symbol_Tag const& in_sym, double price, bool is_low);
 
 	//void add_notifcation_on_ticker(const Symbol_Tag& in_sym, long interval);
+	public : 	
+
 	void update_ticker_notify();
 	void update_price_list();
 	
+
 	void cycle_prices_alerts(fl_ap_it itbegin, fl_ap_it itend)
 	{	
-
-
 
 		///get all prices;
 

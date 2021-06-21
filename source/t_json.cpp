@@ -21,13 +21,25 @@
 
 #define DEBUG_01
 
+
 int main(int argc, char** argv)
 {		
 
-	ticker_notify yf;
+	//ticker_notify yf;
 	std::string api_key 		= API_KEY;
 	std::string secret_key 	= SECRET_KEY;
 	analytic_processor an_proc;
+
+
+//an_proc.mprice_cmder.create_price_alert(Symbol_Tag::MATIC_BUSD,1.50,false);
+//an_proc.mprice_cmder.create_price_alert(Symbol_Tag::MATIC_BUSD,1.20,true);
+
+//an_proc.cycle_prices_alerts(an_proc.mprice_cmder.alert_price_begin(),an_proc.mprice_cmder.alert_price_end());
+return 0;
+
+}
+
+/*
 
 	binance_mgmt m_bi_mgmt;
 	Symbol_Tag stag;
@@ -44,10 +56,4 @@ int main(int argc, char** argv)
 		//Json::Value result; 
 	//	BinaCPP::init( api_key , secret_key );
 	 //price_cmder pc;
-an_proc.mprice_cmder.create_price_alert(Symbol_Tag::MATIC_BUSD,1.50,false);
-an_proc.mprice_cmder.create_price_alert(Symbol_Tag::MATIC_BUSD,1.20,true);
-
-an_proc.cycle_prices_alerts(an_proc.mprice_cmder.alert_price_begin(),an_proc.mprice_cmder.alert_price_end());
-return 0;
-
-}
+	 */

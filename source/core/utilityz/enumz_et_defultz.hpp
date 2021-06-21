@@ -36,18 +36,20 @@
  enum class Symbol_Tag : uint32_t
 {
 
-	BTC_USDT,
+	INVALED,
+  BTC_USDT,
 	XLM_BTC,
 	CHZ_USDT,
 	ADA_BUSD,
 	MATIC_BUSD,
 	BNB_BUSD
-
 };
 
 
+
+
 //----------||
-enum Period_Mili : long
+/*enum Period_Mili : long
 {
   P1MIN   = 600,
   P3MIN   = 1800,
@@ -65,9 +67,26 @@ enum Period_Mili : long
   P24HOUR = 864000,
   P36HOUR = 1296000,
   P48HOUR = 1728000    
-};
+};*/
 
+typedef long Period_Mili; 
 
+const constexpr Period_Mili  P1MIN   = 600;
+const constexpr Period_Mili  P3MIN   = 1800;
+const constexpr Period_Mili  P5MIN   = 3000;
+const constexpr Period_Mili  P10MIN  = 6000;
+const constexpr Period_Mili  P15MIN  = 9000;
+const constexpr Period_Mili  P30MIN  = 18000;
+const constexpr Period_Mili  P45MIN  = 27000;
+const constexpr Period_Mili  P1HOUR  = 36000;
+const constexpr Period_Mili  P2HOUR  = 72000;
+const constexpr Period_Mili  P4HOUR  = 144000;
+const constexpr Period_Mili  P8HOUR  = 288000;
+const constexpr Period_Mili  P10HOUR = 360000;
+const constexpr Period_Mili  P14HOUR = 504000;
+const constexpr Period_Mili  P24HOUR = 864000;
+const constexpr Period_Mili  P36HOUR = 1296000;
+const constexpr Period_Mili  P48HOUR = 1728000;    
 
 
 //*****************************************************************************************||

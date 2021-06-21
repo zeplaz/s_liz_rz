@@ -26,12 +26,13 @@
 	Json::Value alltickers;
 	BinaCPP::get_allPrices( alltickers );
 	
-	allp.price_by_smyb.clear();
-	allp.price_by_smyb.last_update = this->server_time();
+	allp.price_by_symb.clear();
+	allp.last_update = this->server_time();
 
 	for ( int i = 0 ; i < alltickers.size() ; i++ )
 	{
-		allp.price_by_smyb.insert(std::make_pair(alltickers[i]["symbol"].asString(),std::stod(alltickers[i]["price"].asString()))) ;		
+		allp.price_by_symb.insert(std::make_pair(Utility::string_to_symbol(alltickers[i]["symbol"].asString()),
+												std::stod(alltickers[i]["price"].asString())));		
 	}
 
 }

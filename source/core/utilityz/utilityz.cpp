@@ -4,6 +4,46 @@
 #include "enumz_et_defultz.hpp"
 #include <iostream>
 
+
+Symbol_Tag Utility::string_to_symbol(std::string symbol)
+{
+  if(symbol=="BTCUSDT")
+  {
+    return Symbol_Tag::BTC_USDT;
+  }
+
+  else if(symbol=="XLMBTC")
+  {
+     return Symbol_Tag::XLM_BTC;
+  }
+else if(symbol=="ADABUSD")
+  {
+     return Symbol_Tag::ADA_BUSD;
+  }
+  else if(symbol=="BNB_BUSD")
+  {
+     return Symbol_Tag::BNB_BUSD;
+  }
+  else if(symbol=="CHZUSDT")
+  {
+     return Symbol_Tag::CHZ_USDT;
+  }
+  else if(symbol=="MATICBUSD")
+  {
+     return Symbol_Tag::MATIC_BUSD;
+  }
+  /*
+  else if(symbol=="")
+  {
+     return Symbol_Tag: ;
+  }
+  */
+
+   std::cerr <<"###ERRROR NOT VAILD Symbol_Tag\n";
+  return Symbol_Tag::INVALED;
+
+}
+
 std::string Utility::Symbol_Tag_to_string(Symbol_Tag in_tag)
 {
 
