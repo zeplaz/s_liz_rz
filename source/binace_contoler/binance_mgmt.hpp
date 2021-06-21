@@ -59,7 +59,7 @@ class binance_mgmt
 	Json::Value get_klinez(std::string const& symbol, std::string inval, long st, long et, int limit);
 
 	void update_all_prices(allprices& allp);
-
+	
 	//price_point_s raw_price_time_data(std::string const& symbol);
 
 	

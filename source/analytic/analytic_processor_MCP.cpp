@@ -2,8 +2,17 @@
 
 
 #include "analytic_processor_MCP.hpp"
-#include "../core/price_point_cmder.hpp"
+//#include "../core/price_point_cmder.hpp"
 
+
+void analytic_processor::startup()
+{	
+	std::string api_key     = API_KEY;
+	std::string secret_key 	= SECRET_KEY;
+	//should lunch login for binace. 
+	mbinac_mgmt.startup(api_key,secret_key);
+}
+/*
 void analytic_processor::cycle_prices_alerts(fl_ap_it itbegin, fl_ap_it itend)
 	{
 
@@ -43,3 +52,4 @@ void analytic_processor::cycle_prices_alerts(fl_ap_it itbegin, fl_ap_it itend)
 				
 		}
 	}		
+*/

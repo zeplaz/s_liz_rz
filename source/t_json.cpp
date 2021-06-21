@@ -21,20 +21,27 @@
 
 #define DEBUG_01
 
-
 int main(int argc, char** argv)
 {		
 
 	//ticker_notify yf;
-	std::string api_key 		= API_KEY;
-	std::string secret_key 	= SECRET_KEY;
+	
 	analytic_processor an_proc;
 
+	an_proc.startup();
+an_proc.mprice_cmder.create_price_alert(Symbol_Tag::MATIC_BUSD,1.3100,false);
+an_proc.mprice_cmder.create_price_alert(Symbol_Tag::MATIC_BUSD,1.2970,true);
+bool stop = false;
+char loop_n; 
+while(!stop)
+{
+	an_proc.cycle_prices_alerts(an_proc.mprice_cmder.alert_price_begin(),an_proc.mprice_cmder.alert_price_end());
+	std::cout <<"\nloop? n::";
+	std::cin >> loop_n;
+	if(loop_n == 'n')
+		{stop = true;}
+}
 
-//an_proc.mprice_cmder.create_price_alert(Symbol_Tag::MATIC_BUSD,1.50,false);
-//an_proc.mprice_cmder.create_price_alert(Symbol_Tag::MATIC_BUSD,1.20,true);
-
-//an_proc.cycle_prices_alerts(an_proc.mprice_cmder.alert_price_begin(),an_proc.mprice_cmder.alert_price_end());
 return 0;
 
 }

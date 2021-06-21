@@ -46,11 +46,12 @@ struct price_cmder
 	private:
 	std::forward_list<alert_pair> fl_alert_p; 
 	std::priority_queue<ticker_notify> ticker_notify_pq;
-	allprices current_price;
+	
 
 	public:
+	allprices current_price;
 	
-	void create_price_alert(Symbol_Tag& in_tag, double price, bool is_low)
+	void create_price_alert(Symbol_Tag in_tag, double price, bool is_low)
 	{
 		#ifdef DEBUG_01
 		std::cout << "\n###----<<<>>>>>create_price_alert\n";
@@ -75,6 +76,10 @@ struct price_cmder
 	}
 
 
+	long get_cashed_time()
+	{
+		return current_price.last_update;
+	}
 	double get_cashed_price(Symbol_Tag& in_tag)
 	{
 		std::unordered_map<Symbol_Tag,double>::const_iterator got = current_price.price_by_symb.find(in_tag);

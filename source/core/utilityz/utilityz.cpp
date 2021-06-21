@@ -29,7 +29,10 @@ else if(symbol=="ADABUSD")
      return Symbol_Tag::CHZ_USDT;
   }
   else if(symbol=="MATICBUSD")
-  {
+  { 
+      #ifdef DEBUG_01
+      std::cout << "\nDEBUG@***MATIC_BUSD FOUND::\n";
+      #endif
      return Symbol_Tag::MATIC_BUSD;
   }
   /*
@@ -39,7 +42,7 @@ else if(symbol=="ADABUSD")
   }
   */
 
-   std::cerr <<"###ERRROR NOT VAILD Symbol_Tag\n";
+  // std::cerr <<"###ERRROR NOT VAILD Symbol_Tag\n";
   return Symbol_Tag::INVALED;
 
 }
