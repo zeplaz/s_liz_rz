@@ -20,8 +20,7 @@ class analytic_processor
 	private :  
 
 	// gui_mgmt* ptr_gui_mgmt = nullptr; 
-	 binance_mgmt mbinac_mgmt;
-	 
+	binance_mgmt mbinac_mgmt;
 
 	//
 //	void add_price_watch(Symbol_Tag const& in_sym);
@@ -36,22 +35,111 @@ class analytic_processor
 	void update_price_list();
 
 	void startup()
-{	
+	{	
 	std::string api_key     = API_KEY;
 	std::string secret_key 	= SECRET_KEY;
 	//should lunch login for binace. 
 	mbinac_mgmt.startup(api_key,secret_key);
-}
+	}
 
-	void cycle_prices_alerts(fl_ap_it itbegin, fl_ap_it itend)
+	inline void update_prices()
 	{	
-		/*
+		//#ifdef DEBUG_01
+		//std::cout <<"\n####***->update_prices from thread???\n";
+		//#endif
+			mbinac_mgmt.update_all_prices(mprice_cmder.current_price);
+		
+	}
+	
+	void cycle_prices_alerts_redux()
+	{
+		 //mbinac_mgmt.update_all_prices(mprice_cmder.current_price);
+		this->update_prices();
+		long time = mprice_cmder.get_cashed_time();
+		
+		for(auto it = mprice_cmder.alert_price_roof_begin(); it!= mprice_cmder.alert_price_roof_end();it++)
+		{
+			double pp = mprice_cmder.get_cashed_price(it->first);
+			
+			if(!it->second.past_threashold)
+			{
+				if (pp > it->second.price)
+				{	
+					it->second.count++;
+					it->second.last_occurance = time;// pp.time_point;
+					it->second.past_threashold = true;
+					
+					#ifdef DEBUG_01 
+					std::cout << "\n###---> price alart trigerd: falling\n"
+					<<"it->second.count::" << it->second.count << "\n last occured::" << time <<"\n*****\n";
+					#endif
+				} 	
+			}
+			else
+			{	
+				#ifdef DEBUG_01 
+				std::cout << "\n###--->past_threasholded\n checking if price is greater then price\n"
+				<< it->second.price << "where as price is" << pp << '\n';
+				#endif	
+
+				if (pp < it->second.price)
+				{
+					it->second.past_threashold=false;
+					#ifdef DEBUG_01 
+					std::cout << "\n###---> bellow == true, past_threashold=false";
+					#endif
+				}		
+			}	
+		}
+		
+		for(auto it = mprice_cmder.alert_price_floor_begin(); it!= mprice_cmder.alert_price_floor_end() ;it++)
+		{
+			double pp = mprice_cmder.get_cashed_price(it->first);
+			if(!it->second.past_threashold)
+			{
+				if (pp < it->second.price)
+				{	
+					it->second.count++;
+					it->second.last_occurance = time;// pp.time_point;
+					it->second.past_threashold = true;
+					
+					#ifdef DEBUG_01 
+					std::cout << "\n###---> price alart trigerd: falling\n"
+					<<"it->second.count::" << it->second.count << "\n last occured::" << time <<"\n*****\n";
+					#endif
+				} 	
+			}
+			else
+			{	
+				#ifdef DEBUG_01 
+				std::cout << "\n###--->past_threasholded\n checking if price is greater then price\n"
+				<< it->second.price << "where as price is" << pp << '\n';
+				#endif		
+
+				if (pp > it->second.price)
+				{
+					it->second.past_threashold=false;
+					#ifdef DEBUG_01 
+					std::cout << "\n###---> bellow == true, past_threashold=false";
+					#endif
+				}		
+			}	
+		}
+	}
+		
+
+/*
 			this is to expesive here, in a loop calling the prices? descaritng collect the whole list, at once
 			time stamp it and then check its age... keep a bank of prices updated. regulary and THEN process, all
 			some speifc tasks may require a "live" update keep that in mind.
 			*/
 		///get all prices;
-		mbinac_mgmt.update_all_prices(mprice_cmder.current_price);
+
+	void cycle_prices_alerts(fl_ap_it itbegin, fl_ap_it itend)
+	{	
+		
+		//mbinac_mgmt.update_all_prices(mprice_cmder.current_price);
+		this->update_prices();
 		long time = mprice_cmder.get_cashed_time();
 		for (auto it = itbegin; it != itend; it++)
 		{	
@@ -106,9 +194,10 @@ class analytic_processor
 				
 				if(it->second.bellow)
 				{	
+					#ifdef DEBUG_01 
 					std::cout << "\n###--->past_threasholded\n checking if price is greater then price\n"
 					<< it->second.price << "where as price is" << pp << '\n';
-					
+					#endif
 
 					if (pp > it->second.price)
 					{
@@ -122,8 +211,10 @@ class analytic_processor
 				{
 					if (pp < it->second.price)
 					{	
+						#ifdef DEBUG_01 
 						std::cout << "\n###--->past_threasholded\n checking if price is lessthen then price\n"
 						<< it->second.price << "where as price is" << pp << '\n';
+						#endif
 
 						it->second.past_threashold=false;
 					#ifdef DEBUG_01 

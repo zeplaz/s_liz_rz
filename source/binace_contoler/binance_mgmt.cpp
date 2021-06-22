@@ -17,6 +17,7 @@
 #include <iostream>
 #include <algorithm>
 #include <locale> 
+#include <stdlib.h>
 
 
 
@@ -28,11 +29,19 @@
 	
 	allp.price_by_symb.clear();
 	allp.last_update = this->server_time();
+	std::string symbol = ""; 
+	std::pair<string,double> sb;
 
 	for ( int i = 0 ; i < alltickers.size() ; i++ )
 	{
-		allp.price_by_symb.insert(std::make_pair(Utility::string_to_symbol(alltickers[i]["symbol"].asString()),
-												std::stod(alltickers[i]["price"].asString())));		
+		//allp.price_by_symb.insert(std::make_pair(Utility::string_to_symbol(alltickers[i]["symbol"].asString()),
+    	sb.first =  alltickers[i]["symbol"].asString();
+		sb.second = strtod(alltickers[i]["price"].asCString(),nullptr);
+
+		allp.price_by_symb.insert(sb);
+
+		//allp.price_by_symb.insert(std::make_pair(std::string(alltickers[i]["symbol"].asString()),
+	//											std::stod(alltickers[i]["price"].asString())));		
 	}
 
 }

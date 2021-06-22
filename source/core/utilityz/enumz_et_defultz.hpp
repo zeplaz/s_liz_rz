@@ -33,6 +33,12 @@
 *
 */
 
+
+#include <string>
+
+typedef  std::string Symbol_Tag;
+/*
+
  enum class Symbol_Tag : uint32_t
 {
 
@@ -44,7 +50,7 @@
 	MATIC_BUSD,
 	BNB_BUSD
 };
-
+*/
 
 
 

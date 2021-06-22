@@ -4,6 +4,7 @@
 #include "enumz_et_defultz.hpp"
 #include <iostream>
 
+/*
 
 Symbol_Tag Utility::string_to_symbol(std::string symbol)
 {
@@ -40,13 +41,14 @@ else if(symbol=="ADABUSD")
   {
      return Symbol_Tag: ;
   }
-  */
+  
 
   // std::cerr <<"###ERRROR NOT VAILD Symbol_Tag\n";
   return Symbol_Tag::INVALED;
 
 }
-
+*/
+/*
 std::string Utility::Symbol_Tag_to_string(Symbol_Tag in_tag)
 {
 
@@ -85,10 +87,11 @@ std::string Utility::Symbol_Tag_to_string(Symbol_Tag in_tag)
   {
     return std::string("");
   }
-  */
+  
   std::cerr <<"###ERRROR NOT VAILD Symbol_Tag\n";
   return "#NOTVAILD";
-} 
+} */
+
 /*
 
 

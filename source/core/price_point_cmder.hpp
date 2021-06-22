@@ -39,8 +39,10 @@ struct ticker_notify{
 
 
 typedef std::pair<Symbol_Tag,alert_price> alert_pair; 
-typedef std::forward_list<alert_pair>::iterator fl_ap_it;
+typedef std::pair<Symbol_Tag,threashold_price> threashold_pair;
 
+typedef std::forward_list<alert_pair>::iterator fl_ap_it;
+typedef std::forward_list<threashold_pair>::iterator fl_tp_it;
 struct price_cmder
 {
 	private:
@@ -48,22 +50,69 @@ struct price_cmder
 	std::priority_queue<ticker_notify> ticker_notify_pq;
 	
 
+	std::forward_list<threashold_pair> fl_alert_p_roof;
+	std::forward_list<threashold_pair> fl_alert_p_floor;
 	public:
 	allprices current_price;
 	
-	void create_price_alert(Symbol_Tag in_tag, double price, bool is_low)
+	void create_price_alert(const Symbol_Tag& in_tag, double price, bool is_low)
 	{
 		#ifdef DEBUG_01
 		std::cout << "\n###----<<<>>>>>create_price_alert\n";
 		#endif
-
 		alert_price wp;
 		wp.price = price;
 		wp.bellow = is_low;
 		fl_alert_p.emplace_front( in_tag,wp);
 
 	}
-	void add_ticker_notify(Symbol_Tag& in_tag, Period_Mili interval);
+
+	void create_price_floor(const Symbol_Tag& in_tag, double price)
+	{
+		#ifdef DEBUG_01
+		std::cout << "\n###----<<<>>>>>create_price_thresholder::floor\n";
+		#endif
+		threashold_price tp;
+		tp.price = price;
+
+		fl_alert_p_floor.emplace_front(in_tag,tp);
+
+
+	}
+	void create_price_roof(const Symbol_Tag& in_tag, double price)
+	{
+		#ifdef DEBUG_01
+		std::cout << "\n###----<<<>>>>>create_price_thresholder::roof\n";
+		#endif
+		threashold_price tp;
+		tp.price = price;
+
+		fl_alert_p_roof.emplace_front(in_tag,tp);
+	}
+
+
+	void add_ticker_notify(const Symbol_Tag& in_tag, Period_Mili interval);
+
+		inline fl_tp_it alert_price_roof_begin()
+	{
+		return fl_alert_p_roof.begin();
+	}
+
+		inline fl_tp_it alert_price_roof_end()
+	{
+		return fl_alert_p_roof.end();
+	}
+
+		inline fl_tp_it alert_price_floor_begin()
+	{
+		return fl_alert_p_floor.begin();
+	}
+
+		inline fl_tp_it alert_price_floor_end()
+	{
+		return fl_alert_p_floor.end();
+	}
+
 	
 	inline fl_ap_it alert_price_begin()
 	{
@@ -80,13 +129,15 @@ struct price_cmder
 	{
 		return current_price.last_update;
 	}
-	double get_cashed_price(Symbol_Tag& in_tag)
+	double get_cashed_price(const Symbol_Tag& in_tag)
 	{
 		std::unordered_map<Symbol_Tag,double>::const_iterator got = current_price.price_by_symb.find(in_tag);
 
 	 if ( got == current_price.price_by_symb.end())
-	 {
+	 {	
+	 	#ifdef DEBUG_01
 	    std::cerr << "##NOTFOUND-->get_cashed_price::current_price::not found\n";
+	 	#endif
 	 }
 	 else 
 	 {
