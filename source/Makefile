@@ -25,7 +25,7 @@ analytic_MCP.o: analytic/analytic_MCP.cpp analytic/analytic_MCP.hpp
 	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -c -g analytic/analytic_MCP.cpp
 
 engine.o: core/engine.cpp core/engine.hpp
-	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -c -g core/engine.cpp
+	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -I$(IMGUI_BACKEND_INCLUDE) -c -g core/engine.cpp
 
 ut_engine_0.1.o: testz/ut_engine_0.1.cpp 
 	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -I$(IMGUI_BACKEND_INCLUDE) -c -g testz/ut_engine_0.1.cpp

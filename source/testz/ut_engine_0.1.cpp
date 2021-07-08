@@ -38,6 +38,8 @@ int main(int argc, char** argv)
 
 	engine mengine; 
     mengine.ignition();
+    mengine.load_testz_systems();
+    mengine.cycle();
 
 return 0;
 
