@@ -1,35 +1,55 @@
 
 
-# g++ -I../3rd_party/binacpp/lib/libbinacpp/include -I../3rd_party/binacpp/lib/libwebsockets-2.4.0/include main.cpp price_point_cmder.cpp -L../3rd_party/binacpp/lib/libbinacpp/lib -L../3rd_party/binacpp/lib/libwebsockets-2.4.0/lib -lcurl -ljsoncpp  -lcrypto -lwebsockets -lbinacpp
+#
+
+
 CXX = g++
-CXXFLAGS = -fconcepts-ts
+CPPFLAGS = -std=c++20 -pg -fconcepts-ts
 
-LINKERFLAG = -lcurl -ljsoncpp -lcrypto -lwebsockets -lbinacpp 
+LINKERFLAG = -lcurl -lcrypto -lwebsockets -lbinacpp -ljsoncpp -lpthread -lGLEW -lglfw -lGLU -lGL -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl 
 
-libcurl_include = ../3rd_party/binacpp/lib/libcurl-7.56.0/include
-jsoncpp_include = ../3rd_party/binacpp/lib/jsoncpp-1.8.3/include
-libwebsockets_include = ../3rd_party/binacpp/lib/libwebsockets-2.4.0/include
-libbinacpp_include = ../3rd_party/binacpp/lib/libbinacpp/include
+THRID_PARTY_INCLUDE = "../3rd_party" 
+IMGUI_BACKEND_INCLUDE = "../3rd_party/imgui/backends" 
+IMGUI_INCLUDE= "../3rd_party/imgui"  
+BIANCE_INCLUDE = "../3rd_party/binacpp/lib/libbinacpp/include"
+
+OBJS = price_point_cmder.o ut_engine_0.1.o imgui_impl_opengl3.o render.o locks.o gui_MCP.o opengl_utility.o imgui.o imgui_draw.o imgui_tables.o imgui_widgets.o
 
 
-libcurl_lib = ../3rd_party/binacpp/lib/libcurl-7.56.0/lib
-jsoncpp_src = ../3rd_party/binacpp/lib/jsoncpp-1.8.3/src
-libwebsockets_lib = ../3rd_party/binacpp/lib/libwebsockets-2.4.0/lib
-libbinacpp_lib = ../3rd_party/binacpp/lib/libbinacpp/lib
-
-#-I$(jsoncpp_include) 
-#-I$(jsoncpp_include)
-#-${jsoncpp_src}/jsoncpp.cpp
-OBJS = main.o pp_cmder.o
 
 sl_zerz: ${OBJS}
-		${CXX} ${CPPFLAGS} -I$(libcurl_include) -I$(libwebsockets_include) -I$(libbinacpp_include) -L$(libcurl_lib) -L$(libwebsockets_lib) -L$(libbinacpp_lib) ${LINKERFLAGS} ${OBJS} ${LINKERFLAGS} -fPIC -o slz_zerz
+		${CXX} ${CPPFLAGS} ${LINKERFLAG}  ${OBJS} ${LINKERFLAG} -o slz_zerz
 
+engine.o: core/engine.cpp core/engine.hpp
+	${CXX} ${CPPFLAGS} -c -g core/engine.cpp
 
-main.o: main.cpp price_point_cmder.hpp 
-	${CXX} ${CPPFLAGS} -I$(libcurl_include) -I$(libwebsockets_include) -I$(libbinacpp_include) -c main.cpp -ljsoncpp -fPIC - o main.o
+ut_engine_0.1.o: testz/ut_engine_0.1.cpp 
+	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -I$(IMGUI_BACKEND_INCLUDE) -c -g testz/ut_engine_0.1.cpp
 
-pp_cmder.o:	price_point_cmder.hpp price_point_cmder.cpp 
-	${CXX} ${CPPFLAGS} -I$(libcurl_include) -I$(libwebsockets_include) -I$(libbinacpp_include) -c price_point_cmder.cpp -ljsoncpp -fPIC -o pp_cmder.o
+imgui_impl_opengl3.o: ../3rd_party/imgui/backends/imgui_impl_opengl3.cpp ../3rd_party/imgui/backends/imgui_impl_opengl3.h
+	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -I$(IMGUI_BACKEND_INCLUDE) -I$(THRID_PARTY_INCLUDE) -c -g ../3rd_party/imgui/backends/imgui_impl_opengl3.cpp 
 
-#-L$(libcurl_lib) -L$(libwebsockets_lib) -L$(libbinacpp_lib) ${LINKERFLAGS} 
+opengl_utility.o: core/opengl_utility.cpp core/opengl_utility.hpp 
+	${CXX} ${CPPFLAGS} -c -g core/opengl_utility.cpp
+
+render.o: core/render.cpp core/render.hpp
+	${CXX} ${CPPFLAGS} -c -g core/render.cpp  
+
+gui_MCP.o:  core/opengl_utility.hpp gui/gui_MCP.cpp gui/gui_MCP.hpp
+	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -c -g gui/gui_MCP.cpp
+
+price_point_cmder.o:	core/price_point_cmder.hpp core/price_point_cmder.cpp  
+	${CXX} ${CPPFLAGS} -I$(THRID_PARTY_INCLUDE) -c -g  core/price_point_cmder.cpp  
+
+locks.o: core/utilityz/locks.cpp core/utilityz/locks.hpp
+	${CXX} ${CPPFLAGS} -I$(THRID_PARTY_INCLUDE) -c -g core/utilityz/locks.cpp 
+
+imgui.o: ../3rd_party/imgui/imgui.cpp ../3rd_party/imgui/imgui.h 
+	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -c -g ../3rd_party/imgui/imgui.cpp 
+
+imgui_draw.o:	../3rd_party/imgui/imgui_draw.cpp 
+	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -c -g ../3rd_party/imgui/imgui_draw.cpp 
+imgui_tables.o:	../3rd_party/imgui/imgui_tables.cpp 
+	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -c -g ../3rd_party/imgui/imgui_tables.cpp 
+imgui_widgets.o:	../3rd_party/imgui/imgui_widgets.cpp 
+	${CXX} ${CPPFLAGS} -I$(IMGUI_INCLUDE) -c -g ../3rd_party/imgui/imgui_widgets.cpp 

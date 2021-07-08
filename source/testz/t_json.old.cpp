@@ -1,9 +1,10 @@
 ///testjson
 
 //g++ -fconcepts-ts -I../3rd_party/binacpp/lib/libbinacpp/include t_json.cpp binace_contoler/binance_mgmt.cpp core/utilityz/utilityz.cpp -lcurl -lcrypto -lwebsockets -lbinacpp -ljsoncpp
-
-
 ///g++ -fconcepts-ts -I../3rd_party/binacpp/lib/libbinacpp/include t_json.cpp binace_contoler/binance_mgmt.cpp core/utilityz/utilityz.cpp analytic/analytic_processor_MCP.cpp -lcurl -lcrypto -lwebsockets -lbinacpp -ljsoncpp
+//// g++ -std=c++20 -pg -fconcepts-ts -I../3rd_party/binacpp/lib/libbinacpp/include -I../3rd_party t_json.cpp binace_contoler/binance_mgmt.cpp core/utilityz/locks.cpp core/price_point_cmder.cpp core/utilityz/utilityz.cpp -lcurl -lcrypto -lwebsockets -lbinacpp -ljsoncpp -lpthread
+
+
 #include <json/json.h>
 
 #include "../3rd_party/binacpp/lib/libbinacpp/include/binacpp.h"
@@ -19,10 +20,12 @@
 #include "core/price_point_cmder.hpp"
 #include "analytic/analytic_processor_MCP.hpp"
 
+#include "core/tasker.hpp"
 #include <thread>
 
+
 #define DEBUG_01
-const std::basic_string<char> MATIC_BUSD("MATICBUSD");
+
 
 inline static int keep_run = true; 
 
@@ -34,13 +37,18 @@ public :
 
 void process()
 {	
+		std::cout << "##-->>process:backgound pficeupdate\n";
 	if(is_set)
 	{
 	while(keep_run)
 	{
-	 in_ap->update_prices();	
+	std::cout << "\n*!*!*!*##-->>process:backgound::n_ap->update_prices();\n";	
 	}
 	} 
+}
+void update()
+{
+		in_ap->update_prices();	
 }
 
 void set_anly_proc(analytic_processor* ap_in)
@@ -66,14 +74,25 @@ int main(int argc, char** argv)
 	
 	analytic_processor an_proc;
 	an_proc.startup();
+	
+	//utility::lock_price_Map.lock();
 	an_proc.update_prices();
-	background_priceupdate ojb_bg_price_updater;
+	//utility::lock_price_Map.unlock();
+	std::cout << "update_prices movethough";
 
+	background_priceupdate ojb_bg_price_updater;
 	ojb_bg_price_updater.set_anly_proc(&an_proc);
 
+	//tf::Task taskf_price_update = tf::Task(ojb_bg_price_updater);
+	
+	//utili_task::taskflow.emplace(taskf_price_update);
 
+
+
+	//utili_task::executor.run(utili_task::taskflow);
 	//background_priceupdate bg_price_update_functor;
 	//std::thread p_update_thread(std::ref();
+//
 	//std::thread price_update_thread(ojb_bg_price_updater);
 
 
@@ -102,6 +121,9 @@ int i = 0;
 
 std::cout << "\n-----------------------------cycle_prices_alerts::" << '\n';
 auto start01 = chrono::high_resolution_clock::now();
+
+
+
 while(!stop)
 {
 	an_proc.cycle_prices_alerts(an_proc.mprice_cmder.alert_price_begin(),an_proc.mprice_cmder.alert_price_end());
@@ -110,7 +132,7 @@ while(!stop)
 	if(loop_n == 'n')
 	{stop = true;}*/
 	i++;
-	if(i == 1000000)
+	if(i == 2)
 	{stop = true;}
 
 	
@@ -127,7 +149,7 @@ while(!stop)
 {
 	i++;
 	an_proc.cycle_prices_alerts_redux();
-	if(i == 1000000)
+	if(i == 2)
 		{stop = true;}
 }
 

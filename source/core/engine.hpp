@@ -4,38 +4,47 @@
 #ifndef SLIZERZ_01_ENGINE_01_HPP
 #define SLIZERZ_01_ENGINE_01_HPP
 
+#include "../analytic/analytic_MCP.hpp"
+#include "render.hpp"
+#include "../gui/gui_MCP.hpp"
+#include "utilityz/enumz_et_defultz.hpp"
 
-//#include "analytic/analytic_processor_MCP.hpp"
-//#include "core/render.hpp"
-#include "core/utilityz/enumz_et_defultz.hpp"
+
+#include <thread>
 
 //forward declrations
-class analytic_processor;
-struct render;
+//class  analytic_MCP;
+
+
+inline static int keep_run = true; 
+
 
 //*********************************************************************//
 
 struct engine 
 {
-  Engine_State   m_engine_status = Engine_State::INITAL;
+//enum systems montor
+  Engine_Status   m_engine_status = Engine_Status::INITAL;
   Systems_Online m_sym_online    = Systems_Online::SYM_NULL;
-	
 
-  //sceduiler for batched tasks
- // task_cmder tasker;
-
-
-// modualer systems?
-  analytic_processor a_proc_mgmt;
-  render render_mgmt;
   
-   // binance_mgmt binac_mgmt;  
+  // modualer systems
+
+  analytic_MCP an_proc;
+  
+  render mrender; 
+  gui_mgmt mgui; 
 
 
-  void ignition();
-  void shutdown();
-  void ignition();
-  Engine_State cycle();
+//thread stuff...
+  std::thread* binance_background_thread; 
+
+
+
+private: 
+  void kickoff_background_binance_thread();
+
+  
 
 };
 

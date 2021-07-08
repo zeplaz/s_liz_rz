@@ -1,5 +1,9 @@
 //
 
+#include "opengl_utility.hpp"
+
+#include <iostream>    
+
 void APIENTRY GLAPIENTRY glDebugOutput(GLenum source,
                          GLenum type,
                          GLuint id,

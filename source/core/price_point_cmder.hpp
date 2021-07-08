@@ -5,26 +5,19 @@
 #ifndef SLAZERZ_01_PRICE_POINT_CMDER_001_HPP
 #define SLAZERZ_01_PRICE_POINT_CMDER_001_HPP
 
-//#include <utility>
-//#include <algorithm>
 
 #include <forward_list>
 #include <queue>
 
-#include <utility>
-
-//#include <unordered_map>
-
-//enum class Symbol_Tag : uint32_t;
-//enum Period_Mili : long;
-//inline static int next_ppp_ID = 0;
-//typedef std::unordered_multimap<alert_pair> u_map_ap; 
 #include "utilityz/enumz_et_defultz.hpp"
 #include "compoent_stucts.hpp"
-#ifdef DEBUG_01
-#include <iostream>
-#endif
 
+
+struct symb_price
+{
+Symbol_Tag tag;
+double price;
+};
 
 struct ticker_notify{
 	Symbol_Tag symb;
@@ -38,113 +31,60 @@ struct ticker_notify{
 };
 
 
-typedef std::pair<Symbol_Tag,alert_price> alert_pair; 
-typedef std::pair<Symbol_Tag,threashold_price> threashold_pair;
+typedef std::pair<Symbol_Tag,threshold_price> threshold_pair;
 
-typedef std::forward_list<alert_pair>::iterator fl_ap_it;
-typedef std::forward_list<threashold_pair>::iterator fl_tp_it;
-struct price_cmder
+typedef std::forward_list<threshold_pair>::iterator fl_tp_it;
+
+
+class price_cmder
 {
 	private:
-	std::forward_list<alert_pair> fl_alert_p; 
 	std::priority_queue<ticker_notify> ticker_notify_pq;
 	
 
-	std::forward_list<threashold_pair> fl_alert_p_roof;
-	std::forward_list<threashold_pair> fl_alert_p_floor;
+	std::forward_list<threshold_pair> fl_alert_p_roof;
+	std::forward_list<threshold_pair> fl_alert_p_floor;
 	public:
-	allprices current_price;
+	allprices current_prices;
 	
-	void create_price_alert(const Symbol_Tag& in_tag, double price, bool is_low)
-	{
-		#ifdef DEBUG_01
-		std::cout << "\n###----<<<>>>>>create_price_alert\n";
-		#endif
-		alert_price wp;
-		wp.price = price;
-		wp.bellow = is_low;
-		fl_alert_p.emplace_front( in_tag,wp);
 
-	}
+		/*####LOCK USE:::lock_price_Map, for 
+	call; std::unordered_map<Symbol_Tag,double>::const_iterator got = current_price.price_by_symb.find(in_tag);*/
+	double get_cashed_price(const Symbol_Tag& in_tag); 
 
-	void create_price_floor(const Symbol_Tag& in_tag, double price)
-	{
-		#ifdef DEBUG_01
-		std::cout << "\n###----<<<>>>>>create_price_thresholder::floor\n";
-		#endif
-		threashold_price tp;
-		tp.price = price;
+	void create_price_roof(const Symbol_Tag& in_tag, double price);
 
-		fl_alert_p_floor.emplace_front(in_tag,tp);
-
-
-	}
-	void create_price_roof(const Symbol_Tag& in_tag, double price)
-	{
-		#ifdef DEBUG_01
-		std::cout << "\n###----<<<>>>>>create_price_thresholder::roof\n";
-		#endif
-		threashold_price tp;
-		tp.price = price;
-
-		fl_alert_p_roof.emplace_front(in_tag,tp);
-	}
-
+	void create_price_floor(const Symbol_Tag& in_tag, double price);
 
 	void add_ticker_notify(const Symbol_Tag& in_tag, Period_Mili interval);
 
-		inline fl_tp_it alert_price_roof_begin()
+	inline fl_tp_it alert_price_roof_begin()
 	{
 		return fl_alert_p_roof.begin();
 	}
 
-		inline fl_tp_it alert_price_roof_end()
+	inline fl_tp_it alert_price_roof_end()
 	{
 		return fl_alert_p_roof.end();
 	}
 
-		inline fl_tp_it alert_price_floor_begin()
+	inline fl_tp_it alert_price_floor_begin()
 	{
 		return fl_alert_p_floor.begin();
 	}
 
-		inline fl_tp_it alert_price_floor_end()
+	inline fl_tp_it alert_price_floor_end()
 	{
 		return fl_alert_p_floor.end();
 	}
 
-	
-	inline fl_ap_it alert_price_begin()
-	{
-		return fl_alert_p.begin();
-	}
 
-		inline fl_ap_it alert_price_end()
+	inline long get_cashed_time()
 	{
-		return fl_alert_p.end();
+		return current_prices.last_update.load(std::memory_order_acquire);
 	}
 
 
-	long get_cashed_time()
-	{
-		return current_price.last_update;
-	}
-	double get_cashed_price(const Symbol_Tag& in_tag)
-	{
-		std::unordered_map<Symbol_Tag,double>::const_iterator got = current_price.price_by_symb.find(in_tag);
-
-	 if ( got == current_price.price_by_symb.end())
-	 {	
-	 	#ifdef DEBUG_01
-	    std::cerr << "##NOTFOUND-->get_cashed_price::current_price::not found\n";
-	 	#endif
-	 }
-	 else 
-	 {
-	 	return got->second;
-	 }
-	  return -1.0;
-	 }	
 };
 
 

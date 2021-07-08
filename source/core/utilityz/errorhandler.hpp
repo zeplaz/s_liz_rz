@@ -3,8 +3,8 @@
 #define SLAZERZ_01_ERROR_HANDLER_HPP
 
 //#ifndef DEBUG_01
-//#define DEBUG_01
-
+#define DEBUG_01
+#include <string>
  enum Exit_Error_Code : int{
 
    PARSER_FAIL = -11,

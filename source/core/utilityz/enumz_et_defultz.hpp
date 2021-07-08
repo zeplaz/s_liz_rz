@@ -45,15 +45,19 @@ typedef  std::string Symbol_Tag;
 	INVALED,
   BTC_USDT,
 	XLM_BTC,
-	CHZ_USDT,
+  CHZ_USDT,
 	ADA_BUSD,
 	MATIC_BUSD,
 	BNB_BUSD
 };
 */
 
-
-
+const std::basic_string<char> BTC_USDT("BTCUSDT");
+const std::basic_string<char> XLM_BTC("XLMBTC");
+const std::basic_string<char> CHZ_USDT("CHZUSDT");
+const std::basic_string<char> ADA_BUSD("ADABUSD");
+const std::basic_string<char> MATIC_BUSD("MATICBUSD");
+const std::basic_string<char> BNB_BUSD("BNBBUSD");
 //----------||
 /*enum Period_Mili : long
 {
@@ -124,7 +128,7 @@ constexpr const int DEFAULT_HIGHT = 720;
 *
 */
 
-enum class Engine_State : unsigned char
+enum class Engine_Status : unsigned char
 {
   INITAL,
   CONFIGURED,

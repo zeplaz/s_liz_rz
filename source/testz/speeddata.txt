@@ -1,0 +1,11 @@
+locks::time_dif1::::8.29176
+locks::time_dif1::::7.70691
+locks::time_dif1::::8.15488
+locks::time_dif1::::7.63104
+locks::time_dif1::::8.2759
+locks::time_dif1::::8.14234
+semaphore::time_dif1::::7.87044
+semaphore::time_dif1::::8.04077
+semaphore::time_dif1::::7.66444
+semaphore::time_dif1::::7.93543
+semaphore::time_dif1::::8.17866

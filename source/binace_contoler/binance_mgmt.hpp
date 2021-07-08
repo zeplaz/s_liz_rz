@@ -21,9 +21,8 @@
 
 //3rd party libz
 #include <json/json.h>
+
 //--------------------------------------------------------------------------||
-
-
 // FORWARD DELCRATIONS
 struct price_point_dtp; 
 struct price_point_dl;
@@ -31,11 +30,6 @@ struct allprices;
  
 template <typename>
 struct streamed_channel;
-
-
-
-
-
 
 //--------------------------------------------------------------------------||
 /*
@@ -51,18 +45,18 @@ class binance_mgmt
 	public : 
 	void startup(std::string & a_key, std::string & s_key);
 	long server_time();
+	
+	Json::Value get_klinez(std::string const& symbol, std::string inval, long st, long et, int limit);
+
+	void update_all_prices(allprices& allp);
+	
+	
+	/*DEPREATED*/
 	double get_price_d(std::string const& symblol);
 
 	price_point_dtp get_pp_dtp(std::string const& symblol);
 	price_point_dl get_pp_dl(std::string const& symbol);
 
-	Json::Value get_klinez(std::string const& symbol, std::string inval, long st, long et, int limit);
-
-	void update_all_prices(allprices& allp);
-	
-	//price_point_s raw_price_time_data(std::string const& symbol);
-
-	
 	//template <typename T>
 	//T begin_streaming_channel( std::string const& in_channel);
 

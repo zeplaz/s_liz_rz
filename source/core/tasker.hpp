@@ -5,11 +5,18 @@
 #define SLAZERZ_01_QUE_TEMPLATE_001_HPP
 
 #include <functional>
-#include <unordered_map>
-#include <queue>
+//#include <unordered_map>
+//#include <queue>
 
-#include <iostream>
+//#include <iostream>
 
+//#include "utilityz/locks.hpp"
+
+//3rd library 
+
+#include <taskflow/taskflow.hpp>
+
+/*
 enum class Call_Tag : uint32_t {
 PRICE_CALLS,
 K_LINE_CALLS,
@@ -51,8 +58,35 @@ struct task
 	void operator()() { f(); }
 }
 
+*/
+
+namespace utli_task
+{
+	extern tf::Executor executor;
+	extern tf::Taskflow taskflow;
+	extern tf::Semaphore semaphore_Price_Map; 
+};
+
 class task_cmder
 {
+
+	public : 
+//extern tf::Executor executor;
+
+//extern 
+  
+  // define a critical region of 1 worker
+//extern tf::Semaphore semaphore;
+
+	private :
+
+	public: 
+
+		
+};
+
+
+	/*
 	std::unordered_map<Task_Tag,que*> q_bank;
 	std::unordered_map<Func_Tag,std::function> func_cache;
 	std::unordered_map<Task_Tag,f_list*> fl_bank;
@@ -95,10 +129,10 @@ bool run_calls(Call_Tag in_call_tag)
 	}
 }
 
-
-
 class task_cmder
-{
+{};
 
-};
+*/	
+
+
 #endif

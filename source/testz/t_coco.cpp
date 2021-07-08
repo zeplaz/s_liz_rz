@@ -1,5 +1,9 @@
 //main.cpp
 
+//g++ -std=c++20 -pg -fconcepts-ts -I../3rd_party/binacpp/lib/libbinacpp/include -I../3rd_party t_coco.cpp core/engine  binace_contoler/binance_mgmt.cpp core/utilityz/locks.cpp core/price_point_cmder.cpp core/utilityz/utilityz.cpp -lcurl -lcrypto -lwebsockets -lbinacpp -ljsoncpp -lpthread 
+
+///new cmdline.b
+
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
@@ -10,29 +14,30 @@
 #pragma GCC diagnostic ignored "-Wmisleading-indentation"   // [__GNUC__ >= 6] warning: this 'if' clause does not guard this statement      // GCC 6.0+ only. See #883 on GitHub.
 #endif
 
-#include "core/engine.hpp"
+//#include "core/engine.hpp"
+
+//#include "core/utilityz/enumz_et_defultz.hpp"
+//#include "core/tasker.hpp"
+
 
 #include <iostream>
+
+
+
+#define DEBUG_01
+//const std::basic_string<char> MATIC_BUSD("MATICBUSD");
+
+
+
 
 int main(int argc, char** argv)
 {
 
-	engine m_engine;
+//engine m_engine;
+//m_engine.ignition();
+
+analytic_MCP an_proc;
 	
-	m_engine.ignition();
-
-	if(m_engine.m_engine_status== Engine_Status::READY)
-		m_engine.cycle();
-
-	if(m_engine.m_engine_status == Engine_Status::SHUTDOWN)
-	 {
-		m_engine.shutdown();
-	 }
-	else
-	 {
- 		std::cerr <<"\n#->##TODO:::engine state not resloved" 
- 		<< underlying_type(m_engine.m_engine_status) << '\n';
-	 }		
 
 return 0;
 

@@ -16,11 +16,12 @@
 #include "utilityz/enumz_et_defultz.hpp"
 
 #include <unordered_map>
+#include <atomic>
 
 struct allprices{
 
-	long last_update; 
-	//std::unordered_map<std::string, double> price_by_symb;
+	std::atomic<long> last_update; 
+
 	std::unordered_map<Symbol_Tag, double> price_by_symb;
 };
 
@@ -40,18 +41,18 @@ struct alert_price
 	double price =0.0f;
 	long last_occurance =0;
 
-	bool past_threashold = false; 
+	bool past_threshold = false; 
 	bool bellow = false;
 
 };
 
-struct threashold_price 
+struct threshold_price 
 {	
 	int count = 0;
 	double price =0.0f;
 	long last_occurance =0;
 
-	bool past_threashold = false; 
+	bool past_threshold = false; 
 };
 
 //--------------------------------------------
