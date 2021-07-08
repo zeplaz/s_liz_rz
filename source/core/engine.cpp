@@ -4,9 +4,9 @@
 #include "../analytic/analytic_MCP.hpp"
 #include "utilityz/locks.hpp"
 
+#include <iostream>
 
-
-void engine::load_systems()
+void engine::load_testz_systems()
 {
  
  
@@ -47,6 +47,7 @@ void engine::kickoff_background_binance_thread()
   m_sym_online|= Systems_Online::BINACE_API;  
 }
 //int run();
+/*
 void engine::shutdown()
 {
   //render_mgmt.shutdown();
@@ -127,7 +128,8 @@ m_engine_status = Engine_Status::SHUTDOWN;
   m_engine_status = Engine_State::SHUTDOWN; 
  }
 
-}*/
+}
 
 return m_engine_status;
 }
+*/

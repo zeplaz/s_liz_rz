@@ -37,8 +37,7 @@ int main(int argc, char** argv)
 {
 
 	engine mengine; 
-    
-
+    mengine.ignition();
 
 return 0;
 

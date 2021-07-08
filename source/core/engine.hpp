@@ -27,19 +27,16 @@ struct engine
   Engine_Status   m_engine_status = Engine_Status::INITAL;
   Systems_Online m_sym_online    = Systems_Online::SYM_NULL;
 
-  
-  // modualer systems
-
+    // modualer systems
   analytic_MCP an_proc;
-  
   render mrender; 
   gui_mgmt mgui; 
-
 
 //thread stuff...
   std::thread* binance_background_thread; 
 
-
+void ignition();
+void load_testz_systems();
 
 private: 
   void kickoff_background_binance_thread();
