@@ -58,6 +58,11 @@ const std::basic_string<char> CHZ_USDT("CHZUSDT");
 const std::basic_string<char> ADA_BUSD("ADABUSD");
 const std::basic_string<char> MATIC_BUSD("MATICBUSD");
 const std::basic_string<char> BNB_BUSD("BNBBUSD");
+
+
+
+
+
 //----------||
 /*enum Period_Mili : long
 {

@@ -39,8 +39,24 @@ void ignition();
 void load_testz_systems();
 Engine_Status cycle();
 void shutdown();
+
 private: 
   void kickoff_background_binance_thread();
+  void gui_render_draw();
+
+
+  bool shutdown_signa = false;
+  bool halt_signal = false; 
+  bool window_status = true;   
+
+
+  ///handle a
+  bool stop = false;
+  char loop_n; 
+  
+
+ bool show_another_window = true;
+
 
   
 
