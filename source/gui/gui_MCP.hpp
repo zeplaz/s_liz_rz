@@ -17,9 +17,6 @@
 
 #include "../core/utilityz/enumz_et_defultz.hpp"
 
-#include "../core/opengl_utility.hpp"
-
-
 
 
 #include "extentions/text_combo_box.hpp"
@@ -51,7 +48,9 @@ public :
 
 	void add_compoent();
 
-	void display( GLFWwindow* window );
+	//void display(E_ID window_id);
+
+	void  im_set_backend_opengl(const GLFWwindow* window);
 
 	private : 
 	void clean_gui()
@@ -66,12 +65,11 @@ void cycle_active_gui_compnents();
 
 
 
-	/*void write_im_gui_compnentlist(std::forward_list<price_alert_comp>::iterator it)
+	/*
+	void write_im_gui_compnentlist(std::forward_list<price_alert_comp>::iterator it)
 	{	
 
 		std::cout << "##->write_im_gui_compnentlist...\n";
-
-	
 	}
 
 	void write_price_alert_group(std::forward_list<price_alert_comp>::iterator it)
@@ -83,12 +81,14 @@ void cycle_active_gui_compnents();
 		 ImGui::EndGroup();
 		 ImGui::End();
 	}
+
 	////
 	// TEST FUNCIONS/
 	/////
 	//std::forward_list<gui_compoent> gui_componets_list; 
 
-/*void add_gui_compent_test()
+
+void add_gui_compent_test()
 {	
 		gui_compoent ts1_gui_1;
 		ts1_gui_1.im_win_parmz.title= "new test window";
@@ -101,7 +101,7 @@ void cycle_active_gui_compnents();
 }*/
 
 //----------------------------------------------
-*/
+
 
 
 

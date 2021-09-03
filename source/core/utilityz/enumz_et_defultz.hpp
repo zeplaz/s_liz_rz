@@ -4,9 +4,7 @@
 #define SLAZERZ_01_ENUMZ_ET_DEFAULTZ_001_HPP
 
 
-#include "flag_templatez.hpp"
 
-#include "errorhandler.hpp"
 /*
 *
 *                 COLLECTION OF THE ENUMZ DEFULTS
@@ -33,9 +31,7 @@
 *
 */
 
-
 #include <string>
-
 typedef  std::string Symbol_Tag;
 /*
 
@@ -51,7 +47,6 @@ typedef  std::string Symbol_Tag;
 	BNB_BUSD
 };
 */
-
 const std::basic_string<char> BTC_USDT("BTCUSDT");
 const std::basic_string<char> XLM_BTC("XLMBTC");
 const std::basic_string<char> CHZ_USDT("CHZUSDT");
@@ -122,43 +117,10 @@ constexpr long MAX_PLT_ARRAY = 300000;
 *
 */
 
-constexpr const int DEFAULT_WIDTH = 1280;
-constexpr const int DEFAULT_HIGHT = 720;
+//constexpr const int DEFAULT_WIDTH = 1280;
+//constexpr const int DEFAULT_HIGHT = 720;
 
 
-//*****************************************************************************************||
-/*
-*
-*			|\ENGINE/| 
-*
-*/
-
-enum class Engine_Status : unsigned char
-{
-  INITAL,
-  CONFIGURED,
-  IGNITION,
-  READY,
-  RUNNING,
-  SHUTDOWN,
-  STALL,
-  FAILURE
-};
-
-enum class Systems_Online : uint32_t
-{ 
-  SYM_NULL  =0x00, 
-  RENDERER  =0x01,
-  IM_GUI    =0x02,
-  SYM_INPUTS=0x04,
-  BINACE_API=0x08
-};
-
-template<>
-  struct EnableBitMaskOperators<Systems_Online>
-    {
-       static const bool enable = true;
-    };
 
 
 

@@ -28,9 +28,7 @@ ut_renderer_0_1.cpp ../core/render.cpp ../core/opengl_utility.cpp  ../gui/gui_MC
 #endif
 
 
-#include "../core/render.hpp"
-#include "../gui/gui_MCP.hpp"  
-#include "imgui_impl_opengl3.h"
+
 #include "../core/engine.hpp"
 
 int main(int argc, char** argv)
@@ -42,7 +40,8 @@ int main(int argc, char** argv)
 
     std::cout << "\n--->> main about to cycle\n";
     mengine.cycle();
-
+    
+    mengine.shutdown();
 return 0;
 
 }

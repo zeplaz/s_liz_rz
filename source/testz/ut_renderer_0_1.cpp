@@ -20,16 +20,53 @@ ut_renderer_0_1.cpp ../core/render.cpp ../core/opengl_utility.cpp  ../gui/gui_MC
 #endif
 
 
-#include "../core/render.hpp"
-#include "../gui/gui_MCP.hpp"  
-#include "imgui_impl_opengl3.h"
+//#include "../core/render.hpp"
+//#include "../gui/gui_MCP.hpp"  
+//#include "imgui_impl_opengl3.h"
+//#include "../core/glfw_windowBuilder.hpp"
+
+//#include <iostream>
+
+#include "../core/utilityz/errorhandler.hpp"
 
 int main(int argc, char** argv)
 {
 
-render mrender;
+Error_Rangler er;
+// fmt::print("The answer is {}.", 42);
 
-mrender.setup_contex();
+er.print_EC_ET(SHADER_LINK_FAIL,RENDER_LZ);
+er.print_EC_ET(FILE_FORMATE_ERROR, LV2);
+er.print_EC_ET(NO_ERROR,NON_ERROR);
+er.print_EC_ET(3,UNKNOWN_ERROR);
+er.print_EC_ET(ENGINE_FAILURE,LV0,"oh no engine go bsplahyz");
+er.print_EC_ET(MAPLOOKUP_FAIL,LV1," object for ref lost?");
+
+/*
+windows_MGMT win_mgmt; 
+    
+    std::string main_title = "main"; 
+  // std::cout << "erorcreation;" <<
+  E_ID main_win =  win_mgmt.create_window(500,500,"main_title");
+
+    while(win_mgmt.poll_to_close())
+    {
+        int bussywork; 
+
+
+        for(int x = 0; x< 200;x++)
+        {
+            int dj;
+          if(x == 199)
+            std::cout << "ttnien\n";
+        }
+    }
+*/
+//render mrender;
+
+//mrender.setup_contex();
+
+/*
 
 gui_mgmt mgui; 
 mgui.setup_imgui(mrender.window);
@@ -80,8 +117,9 @@ bool show_another_window = true;
         ///
     }
 
-
+*/
 return 0;
+
 
 }
 

@@ -1,7 +1,10 @@
 //engine.cpp
 
 #include "engine.hpp"
+
 #include "../analytic/analytic_MCP.hpp"
+#include "render.hpp"
+
 #include "utilityz/locks.hpp"
 ///
 
@@ -21,11 +24,18 @@ an_proc.mprice_cmder.create_price_roof(MATIC_BUSD,1.1);
 an_proc.mprice_cmder.create_price_roof(MATIC_BUSD,1.3270);
 an_proc.mprice_cmder.create_price_roof(MATIC_BUSD,1.22);
 
+create_new_window();
+
 //mgui.add_gui_compent_test();
 
 }
 
 
+engine::egnine()
+  {
+   mrender      = new render(this);
+   analytic_MCP = new analytic_MCP;  
+  }
 
 void engine::shutdown()
 {
@@ -42,7 +52,7 @@ void engine::shutdown()
   m_engine_status = Engine_Status::SHUTDOWN; 
 }
 
-void engine::ignition()
+ERRORCODE engine::ignition()
 { 
   m_engine_status = Engine_Status::IGNITION;
  
@@ -99,7 +109,9 @@ Engine_Status engine::cycle()
   int i = 0;
   std::cout <<"\n---| engine::cycle()||\n";
   
-  while (!glfwWindowShouldClose(mrender.window))
+  while (!)
+   
+
     {
       i++;
       

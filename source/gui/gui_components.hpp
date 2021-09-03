@@ -3,7 +3,7 @@
 #ifndef SLAZERZ_01_GUI_COMPOENETS_INVENTORY_001_HPP
 #define SLAZERZ_01_GUI_COMPOENETS_INVENTORY_001_HPP
 
-#include "t"
+
 //structale parts
 struct box{};
 struct pane{};

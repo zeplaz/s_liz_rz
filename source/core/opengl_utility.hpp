@@ -7,7 +7,10 @@
 #include <GL/glew.h>
 
 #include <GLFW/glfw3.h>
-//#include <glm.hpp> // glm::mat4
+
+
+ #define GLM_SWIZZLE // Enable GLM Swizzling, must be before glm is included!
+
 
 #include <glm/glm.hpp> // glm::mat4
 #include <glm/ext.hpp> // perspective, translate, rotate
