@@ -20,7 +20,9 @@ enum class Systems_Online : uint32_t;
 struct logger
 {
 	
-
+// list active sysems?
+	//outputtime.
+	
 };
 }
 

@@ -34,7 +34,8 @@ typedef int ERRORCODE;
    IM_GUI_FAIL = -22,
    GWFLW_FAIL_CREATE = -23,
    GWFLW_FAIL_INIT = -24,
-   GLEW_FAIL = -25
+   GLEW_FAIL = -25,
+   YAHOO_CURL_PARSE_FAIL =-26
    };
 
 #endif

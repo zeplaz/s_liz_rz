@@ -69,6 +69,9 @@
      case OI_UTILITYZ_FAIL:
      return "OI_UTILITYZ_FAIL";
 
+     case YAHOO_CURL_PARSE_FAIL:
+     return "YAHOO_CURL_PARSE_FAIL";
+
      default :
       std::string ue =  std::to_string(in_error);
       ue =  ue+"::UNKNOWN ERROR";
@@ -102,26 +105,27 @@
    {
     Alert_lvFattal = al; 
    }
+
  bool   is_fattel(ERRORCODE inerror, Error_Triage et) const
    {
       if(et == LV0)
-        return true;
+      { return true;}
 
       if(et < Alert_lvFattal)
-
+      {
         switch(inerror)
         {
-
           case ENGINE_FAILURE : 
           return true;
           
           case MAIN_FAIL : 
           return true;
-
         } 
 
         return false;        
    }
+ }
+
     void print_EC_ET(ERRORCODE inerror, Error_Triage et) const
     { 
       
@@ -199,12 +203,19 @@
 
  };
 
-struct Print_EC_ER
+
+namespace Utility
 {
-  void operator () (ERRORCODE inerror, Error_Triage et)
-  {
-   // Error_Rangler::print_EC_ET(inerror,et);
-  }
- };
+
+
+static void Print_Error(ERRORCODE inerror, Error_Triage et) 
+{
+  Error_Rangler er; 
+
+  er.print_EC_ET(inerror, et);
+}
+
+}
+
 #endif
 

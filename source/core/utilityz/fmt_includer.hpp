@@ -8,7 +8,7 @@ the libary and its sorce code are Copyright (c) 2012 - present, Victor Zverovich
 see license file for detals.
 
 */
-
+#ifndef SLIZERZ_FTM_INCLUDER_2021_HPP
 #define SLIZERZ_FTM_INCLUDER_2021_HPP
 
 #include "../../3rd_party/fmt/include/fmt/core.h"
