@@ -8,7 +8,7 @@ LIBSTD06   =  /usr/lib64/libstdc++.so.6
 THRID_PARTY_INCLUDE = "../3rd_party" 
 YAHOOF_UTILS_INCLUDE = "./3rd_party/yahooF_utils"
 
-OBJS = t_yahooF_curl.o #time_utils.o
+OBJS = t_yahooF_curl.o curl_handler_yf.o parser_yah.o quote_spot_yah.o
 FMT_INCLUDE = /usr/local/include/fmt
 
 
@@ -18,9 +18,14 @@ yahooF_test: ${OBJS}
 t_yahooF_curl.o: testz/t_yahooF_curl.cpp
 	${CXX} ${CPPFLAGS} -c -g testz/t_yahooF_curl.cpp
 
-#time_utils.o: ../3rd_party/yahooF_utils/time_utils.cpp ../3rd_party/yahooF_utils/time_utils.hpp
-#	${CXX} ${CPPFLAGS} -I$(THRID_PARTY_INCLUDE) -I$(YAHOOF_UTILS_INCLUDE) -c -g ../3rd_party/yahooF_utils/time_utils.cpp 
+curl_handler_yf.o:yahoofinace/yf_curl.hpp yahoofinace/curl_handler_yf.cpp  
+	${CXX} ${CPPFLAGS} -c -g  yahoofinace/curl_handler_yf.cpp  
 
+parser_yah.o:yahoofinace/yf_curl.hpp yahoofinace/parser_yah.cpp  
+	${CXX} ${CPPFLAGS} -c -g  yahoofinace/parser_yah.cpp  
+
+quote_spot_yah.o: yahoofinace/yf_curl.hpp yahoofinace/quote_spot_yah.cpp  
+	${CXX} ${CPPFLAGS} -c -g yahoofinace/quote_spot_yah.cpp  
 
 
 .PHONY : clean

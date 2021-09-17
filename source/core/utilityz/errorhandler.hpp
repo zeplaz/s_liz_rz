@@ -8,6 +8,8 @@
 */
 #define DEBUG_01
 
+//#define DEBUG_02
+
 #include "error_MSG.hpp"
 #define FMT_HEADER_ONLY
 //#include "fmt_includer.hpp"
@@ -213,6 +215,13 @@ static void Print_Error(ERRORCODE inerror, Error_Triage et)
   Error_Rangler er; 
 
   er.print_EC_ET(inerror, et);
+}
+
+static void Print_Error(ERRORCODE inerror, Error_Triage et, const char* note) 
+{
+  Error_Rangler er; 
+
+  er.print_EC_ET(inerror, et, note);
 }
 
 }

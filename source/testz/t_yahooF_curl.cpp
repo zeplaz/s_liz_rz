@@ -9,7 +9,7 @@
 
 
 #include "../yahoofinace/yf_curl.hpp"
-
+#include "../core/utilityz/errorhandler.hpp"
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
@@ -25,23 +25,11 @@
 int main(int argc, char** argv)
 {
 
- std::time_t result = std::time(nullptr);
-Error_Rangler er;
+	parser_quote_yah pq; 
 
-y_spot test_spot(result, 3094,403.34,30.3, 39.02); 
+	quote_yah testQu = pq.get_quote("KPLT",i1mo,g15m);
 
-fmt::print("SPOTINFO \n{} ",test_spot.to_string());
-
-
-y_quote test_quotec("KPLT"); 
-std::string raw_curl = test_quotec.get_quote(i5d,g5m); 
-
-fmt::print("\ntestquotecurel complated \n ");
-
-parser_quote pq; 
-
-pq.take_raw(raw_curl); 
-
+	fmt::print("numspots {}\n", testQu.num_spots());
 
 return 0;
 }
