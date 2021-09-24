@@ -29,3 +29,15 @@ std::string spot_yah::to_string()
 			 fmt::format("High: {} \n",high)+
 			 fmt::format("Low: {} \n",low);
 }	
+
+quote_yah::quote_yah( quote_yah const&& other)
+{
+	symbol = std::move(other.symbol);
+	spots = std::move(other.spots);
+} 
+
+quote_yah::quote_yah(quote_yah const&  other)
+{
+		symbol = other.symbol;
+		spots  = other.spots;
+} 

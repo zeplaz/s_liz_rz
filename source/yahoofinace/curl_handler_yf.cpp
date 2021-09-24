@@ -17,10 +17,7 @@ std::string curl_handler::get_rawQuote(std::string symbol, int range, int granul
 					      interval_tag + granualrity.at(granulity) + 
 					      incator_timestamp;
 
-
-
-		//std::string sym_url = y_qoute_url+this->symbol  + "/?p="  + this->symbol;
-		
+			
 		std::string responseBuffer;
 
 		CURL* curl = curl_easy_init();
@@ -37,7 +34,7 @@ std::string curl_handler::get_rawQuote(std::string symbol, int range, int granul
             #ifdef DEBUG_01
             const char *str = curl_easy_strerror( res );
             fmt::print("\n##-->CURLcode:: {}\n", str);
-            fmt::print("************responseBuffer:: {}\n *************************************\n",responseBuffer);
+           // fmt::print("************responseBuffer:: {}\n *************************************\n",responseBuffer);
             #endif
 
             // Cleanup

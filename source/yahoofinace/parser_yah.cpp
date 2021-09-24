@@ -21,7 +21,9 @@ quote_yah parser_quote_yah::get_quote(std::string symbol, int range, int granuli
 
 int parser_quote_yah::extact_intger(size_t& pos, std::string const& data)
 	{	
+		#ifdef DEBUG_02	
 		fmt::print("\n ##-->extact_intger \n ");	
+		#endif
 		char n_char = ' ';
 		
 		std::string temp_int = " ";
@@ -32,6 +34,7 @@ int parser_quote_yah::extact_intger(size_t& pos, std::string const& data)
 		#ifdef DEBUG_02	
 		fmt::print("\n ##-->n_char BEFORE commacheck::{} \n",n_char);	
 		#endif
+		
 		if(n_char == comma)
 		{
 			pos++;
@@ -51,7 +54,9 @@ int parser_quote_yah::extact_intger(size_t& pos, std::string const& data)
 			n_char = data.at(pos);
 		
 		}
+		#ifdef DEBUG_02	
 		fmt::print("CURRENT::TEMP:INT::{}\n",temp_int);
+		#endif
 		return std::stoi(temp_int);
 	}		
 
@@ -76,7 +81,9 @@ int parser_quote_yah::extact_intger(size_t& pos, std::string const& data)
 			n_char = data.at(pos);
 		
 		}
+		#ifdef DEBUG_02	
 		fmt::print("CURRENT::TEMP:double::{}\n",temp_dub);
+		#endif
 		return std::stod(temp_dub);
 	}
 

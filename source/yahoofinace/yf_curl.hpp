@@ -65,6 +65,12 @@ enum granuality_index
 	g3mo
 };
 
+struct quote_pak
+{
+	int interval;
+	int granulity;
+};
+
 /*
  ***spot_yah***
   DEFINED IN::->parser_yah.cpp
@@ -105,9 +111,19 @@ struct quote_yah
 	}
 
 	inline void add_spot(spot_yah in_spot)
-	{
+	{	
+		//needs locks. or somthing omg.
 		spots.push_back(in_spot);
-	} 
+	}
+
+	inline void clear_spots()
+	{
+		/// needs to be critial secion
+	}
+
+	quote_yah(quote_yah const& other);
+	quote_yah(quote_yah const&&  other);
+
 
 };
 
