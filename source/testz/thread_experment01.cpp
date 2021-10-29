@@ -70,6 +70,7 @@ struct exmpdata
 };
 
 
+//template<typename T>
 struct Atomic_Pointer
 {
 	std::atomic<std::shared_ptr<exmpdata>> data;

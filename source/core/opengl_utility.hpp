@@ -4,8 +4,8 @@
 //#define GLFW_INCLUDE_NONE       // GLFW including OpenGL headers causes ambiguity or multiple definition errors.
 
 #include <stdio.h>
-#include <GL/glew.h>
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 

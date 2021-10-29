@@ -11,6 +11,7 @@
 #include "../yahoofinace/yf_curl.hpp"
 #include "../yahoofinace/quote_requester.hpp"
 #include "../core/utilityz/errorhandler.hpp"
+
 #include <functional>
 #include <thread>
 

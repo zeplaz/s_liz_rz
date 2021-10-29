@@ -4,10 +4,6 @@
 #ifndef SLIZERZ_01_IM_GUI_COMPOENTS_02_01_HPP
 #define SLIZERZ_01_IM_GUI_COMPOENTS_02_01_HPP
 
-//#include "../core/opengl_utility.hpp"
-
-//#include <forward_list>
-
 
 #include <string>
 

@@ -66,7 +66,7 @@ template<>
 
 class analytic_MCP;
 struct render;
-
+struct 
 ///    
 
 struct engine 
@@ -86,7 +86,8 @@ struct engine
   
   //thread stuff...
   std::thread* binance_background_thread; 
-
+  std::thread* yahoo_background_thread; 
+   
 
   /////////
   void load_testz_systems();
