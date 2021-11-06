@@ -6,7 +6,6 @@
 #include "../core/opengl_utility.hpp"
 
 #include "imgui.h"
-
 #include "imgui_impl_opengl3.h"
 
 
@@ -28,7 +27,7 @@ public:
     inline static char         g_GlslVersionString[32] = "";
     inline static GLuint       g_FontTexture = 0;
     inline static GLuint       g_ShaderHandle = 0, g_VertHandle = 0, g_FragHandle = 0;
-    inline static int          g_AttribLocationTex = 0, g_AttribLocationProjMtx = 0;
+    inline static int          g_AttribLERRORCODE launch_glfw_main_window()ocationTex = 0, g_AttribLocationProjMtx = 0;
     inline static int          g_AttribLocationPosition = 0, g_AttribLocationUV = 0, g_AttribLocationColor = 0;
     inline static unsigned int g_VboHandle = 0, g_ElementsHandle = 0;
     /*----*/
@@ -39,8 +38,6 @@ public:
     
     inline  static GLFWcursor*          g_MouseCursors[ImGuiMouseCursor_COUNT] = {};
     inline  static bool                 g_InstalledCallbacks = false;
-
-    public : 
     
         // Chain GLFW callbacks: our callbacks will call the user's previously installed callbacks, if any.
     inline  static bool                 g_MouseJustPressed[ImGuiMouseButton_COUNT] = {};
@@ -50,12 +47,13 @@ public:
     inline  static GLFWkeyfun           g_PrevUserCallbackKey = NULL;
     inline  static GLFWcharfun          g_PrevUserCallbackChar = NULL;
 
+    friend struct im_gui_ctler; 
     
 ///endit..    
 
 };
 
-struct im_gui_ctler
+struct imgui_glfw_ctler
 {
  imgui_backend im_backend;
 
@@ -68,6 +66,7 @@ void ImGui_ImplGlfw_UpdateGamepads();
 bool ImGui_ImplGlfw_Init_redux(GLFWwindow* window, bool install_callbacks, GlfwClientApi client_api);
 
 };
+
 
 
 namespace SL_ZER

@@ -36,7 +36,7 @@ int main(int argc, char** argv)
 
 	engine mengine; 
     mengine.ignition();
-    mengine.load_testz_systems();
+  //  mengine.load_testz_systems();
 
     std::cout << "\n--->> main about to cycle\n";
     mengine.cycle();

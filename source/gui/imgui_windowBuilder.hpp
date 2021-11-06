@@ -23,7 +23,6 @@
 
 */
 
-#include "../core/utilityz/id_utilityz.hpp"
 #include "gui_components_02.hpp"
 #include "im_gui_modifed_backends.hpp"
 
@@ -46,7 +45,6 @@ enum Degree_Colour
 };
 
 
-
 const ImColor Dark_Green_03(120,210,120);
 const ImColor Mid_Green_02(10,210,86);
 const ImColor Light_Green_01(12,50,12);
@@ -64,9 +62,8 @@ struct im_gui_window_parmz
         bool is_docking = true;
         bool is_viewporting = false; 
 
-        ImGuiWindowFlags im_win_flag = 0;
-
         
+
          bool no_titlebar = false;
          bool no_scrollbar = false;
          bool no_menu = false;
@@ -79,52 +76,112 @@ struct im_gui_window_parmz
          bool no_bring_to_front = false;
 
           
-        inline void set_window_flags(ImGuiWindowFlags& window_flags)
+        inline void  set_window_flags(ImGuiWindowFlags& window_flags)
         {
+            
 
-        if (no_titlebar)        window_flags |= ImGuiWindowFlags_NoTitleBar;
-        if (no_scrollbar)       window_flags |= ImGuiWindowFlags_NoScrollbar;
-        if (!no_menu)           window_flags |= ImGuiWindowFlags_MenuBar;
-        if (no_move)            window_flags |= ImGuiWindowFlags_NoMove;
-        if (no_resize)          window_flags |= ImGuiWindowFlags_NoResize;
-        if (no_collapse)        window_flags |= ImGuiWindowFlags_NoCollapse;
-        if (no_nav)             window_flags |= ImGuiWindowFlags_NoNav;
-        if (no_background)      window_flags |= ImGuiWindowFlags_NoBackground;
-        if (no_bring_to_front)  window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
-        //if (no_close)           p_open = nullptr; // Don't pass our bool* to Begin
-    }
+            if (no_titlebar)        window_flags |= ImGuiWindowFlags_NoTitleBar;
+            if (no_scrollbar)       window_flags |= ImGuiWindowFlags_NoScrollbar;
+            if (!no_menu)           window_flags |= ImGuiWindowFlags_MenuBar;
+            if (no_move)            window_flags |= ImGuiWindowFlags_NoMove;
+            if (no_resize)          window_flags |= ImGuiWindowFlags_NoResize;
+            if (no_collapse)        window_flags |= ImGuiWindowFlags_NoCollapse;
+            if (no_nav)             window_flags |= ImGuiWindowFlags_NoNav;
+            if (no_background)      window_flags |= ImGuiWindowFlags_NoBackground;
+            if (no_bring_to_front)  window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
+            //if (no_close)           p_open = nullptr; // Don't pass our bool* to Begin
+        }
     };
 
 
-class im_gui_window
+class imgui_controler
 {
-    public : 
-void  im_context_create()
+    
+WINDOW_FRAMWORK win_framework; 
+
+public : 
+~imgui_controler(); 
+
+void set_window_framework(WINDOW_FRAMWORK wf)
+{
+    win_framework= wf; 
+}
+
+inline void  im_context_create()
     {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
     }
 
-
-void io_gui_config(const im_gui_window_parmz& parmz);
-
-void set_imgui_style()
+inline void set_imgui_style()
 {
       ImGui::StyleColorsDark();
 }
 
+void io_gui_config(const im_gui_window_parmz& parmz);
+
+void update_viewporting();
+
+void connect_sdl(SDL_Window* window, SDL_GLContext* gl_context, const char* glsl_version);
+
+void connect_glfw(GLFWwindow* window, const char* glsl_version);
 
 
-void viewporting()
-{
-    ImGuiIO& io = ImGui::GetIO();
-    //...need window
-    ImGui::UpdatePlatformWindows();
-    ImGui::RenderPlatformWindowsDefualt();
-
-
-}
 };
+
+class gui_widget
+{
+
+};
+class abstract_gui_widget_factory
+{
+  gui_widget operator() 
+  {
+    gui_widget gw;
+
+    return gw; 
+  }
+};
+
+
+    /*
+
+        void add_compoent();
+    void write_im_gui_compnentlist(std::forward_list<price_alert_comp>::iterator it)
+    {   
+
+        std::cout << "##->write_im_gui_compnentlist...\n";
+    }
+
+    void write_price_alert_group(std::forward_list<price_alert_comp>::iterator it)
+    {   
+        ImGui::Begin("price_alerts")
+        ImGui::BeginGroup(); 
+        
+        
+         ImGui::EndGroup();
+         ImGui::End();
+    }
+
+    ////
+    // TEST FUNCIONS/
+    /////
+    //std::forward_list<gui_compoent> gui_componets_list; 
+
+
+void add_gui_compent_test()
+{   
+        gui_compoent ts1_gui_1;
+        ts1_gui_1.im_win_parmz.title= "new test window";
+        ts1_gui_1.im_win_parmz.set_window_flags(ts1_gui_1.im_win_flag);
+
+        gui_componets_list.push_front(ts1_gui_1);
+
+
+    //gui_componets_list.emplace_front();
+}*/
+
+//----------------------------------------------
 
 
 

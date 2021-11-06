@@ -10,7 +10,8 @@
 *	in own namespace  
 *
 */
-
+#include <cstddef> 
+#include <functional> 
 
 namespace Utility 
 {
@@ -82,7 +83,7 @@ struct E_ID : public self_counter<E_ID>
 struct hasher_eid
 {
 
-  std::size_t operator()(const E_ID& e) const 
+  size_t operator()(const E_ID& e) const 
 {
         size_t res = 17;
         res = res * 31 + std::hash<long>()(e.id);

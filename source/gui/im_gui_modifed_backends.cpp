@@ -88,7 +88,7 @@ void SL_ZER::callbacks::ImGui_ImplGlfw_CharCallback(GLFWwindow* window, unsigned
 
 /////// the im_gui layer with some functions whould could use a rewrite.
 
- void im_gui_ctler::ImGui_ImplGlfw_UpdateMousePosAndButtons(GLFWwindow* g_Window)
+ void imgui_glfw_ctler::ImGui_ImplGlfw_UpdateMousePosAndButtons(GLFWwindow* g_Window)
 {
     // Update buttons
     ImGuiIO& io = ImGui::GetIO();
@@ -123,7 +123,7 @@ void SL_ZER::callbacks::ImGui_ImplGlfw_CharCallback(GLFWwindow* window, unsigned
 }
 
 
-void  im_gui_ctler::ImGui_ImplGlfw_NewFrame(GLFWwindow* Window)
+void  imgui_glfw_ctler::ImGui_ImplGlfw_NewFrame(GLFWwindow* Window)
 {
     ImGuiIO& io = ImGui::GetIO();
     IM_ASSERT(io.Fonts->IsBuilt() && "Font atlas not built! It is generally built by the renderer backend. Missing call to renderer _NewFrame() function? e.g. ImGui_ImplOpenGL3_NewFrame().");
@@ -150,7 +150,7 @@ void  im_gui_ctler::ImGui_ImplGlfw_NewFrame(GLFWwindow* Window)
 }
 
 
- void  im_gui_ctler::ImGui_ImplGlfw_UpdateMouseCursor(GLFWwindow* g_Window)
+ void  imgui_glfw_ctler::ImGui_ImplGlfw_UpdateMouseCursor(GLFWwindow* g_Window)
 {
     ImGuiIO& io = ImGui::GetIO();
     if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) || glfwGetInputMode(g_Window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED)
@@ -171,7 +171,7 @@ void  im_gui_ctler::ImGui_ImplGlfw_NewFrame(GLFWwindow* Window)
     }
 }
 
-void  im_gui_ctler::ImGui_ImplGlfw_UpdateGamepads()
+void  imgui_glfw_ctler::ImGui_ImplGlfw_UpdateGamepads()
 {
     ImGuiIO& io = ImGui::GetIO();
     memset(io.NavInputs, 0, sizeof(io.NavInputs));

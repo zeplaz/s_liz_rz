@@ -3,8 +3,10 @@
 #ifndef SLIZERZ_01_ENGINE_01_HPP
 #define SLIZERZ_01_ENGINE_01_HPP
 
+
+
  //---these are more likly to be offical modualiset, vs the other as full systems..
-/**MODUALS* CONVERT TO PROPER MODUALS OR VISEVRA*/ 
+/**MODUALS* CONVERT TO PROPER MODUALS OR VISEVRA*/
 
 
 //CORE//
@@ -12,11 +14,14 @@
 
 //utilityz//
 #include "utilityz/flag_templatez.hpp"
-//#include "utilityz/errorhandler.hpp"
-//#include "utilityz/id_utilityz.hpp"
+#include "utilityz/errorhandler.hpp"
+
+#include "utilityz/id_utilityz.hpp"
 
 //SLH//
 #include <thread>
+
+#include "render/render.hpp"
 
 
 //Subsystems//
@@ -24,14 +29,16 @@
 //#include "../gui/gui_MCP.hpp"
 
 
+
+
 //*****************************************************************************************||
 /*
 *
-*     |\ENGINE/| 
+*     |\ENGINE/|
 *
 */
 
-inline static int keep_run = true; 
+inline static int keep_run = true;
 
 enum class Engine_Status : unsigned char
 {
@@ -46,8 +53,8 @@ enum class Engine_Status : unsigned char
 };
 
 enum class Systems_Online : uint32_t
-{ 
-  SYM_NULL  =0x00, 
+{
+  SYM_NULL  =0x00,
   RENDERER  =0x01,
   IM_GUI    =0x02,
   SYM_INPUTS=0x04,
@@ -62,59 +69,68 @@ template<>
 
 //*********************************************************************//
 
+#define DEFAULT_WIN_HIGHT  1000
+#define DEFAULT_WIN_WIDTH  1000
+const std::string MAIN_WIN_TITLE = "Main_Window_s_liz_rz";
+
 //Forward declrations//
 
 class analytic_MCP;
-struct render;
-struct 
-///    
+class render_MCP;
+///
 
-struct engine 
+struct engine
 {
 
-  inline static int alive_objects ={0}; 
+  inline static float delta_time = {0.0f};        // time between current frame and last frame
+  inline static float lastFrame = {0.0f};
 
-  egnine();
+  inline static int alive_objects ={0};
+  inline static unsigned long long int cycle_count ={0};
 
   //enum systems montor
   Engine_Status  m_engine_status = Engine_Status::INITAL;
   Systems_Online m_sym_online    = Systems_Online::SYM_NULL;
- 
+
   //modualer systems
-  analytic_MCP*    an_proc;
-  render*          mrender; 
-  
+ //analytic_MCP*    an_proc;
+  render_MCP*          mrender = nullptr;
+
+
   //thread stuff...
-  std::thread* binance_background_thread; 
-  std::thread* yahoo_background_thread; 
-   
+  std::thread* binance_background_thread = nullptr;
+  std::thread* yahoo_background_thread = nullptr;
+
 
   /////////
+  engine();
   void load_testz_systems();
-
   ERRORCODE ignition();
   void shutdown();
-
   Engine_Status cycle();
+  ERRORCODE launch_main_window();
 
-private: 
+
+
+private:
   void kickoff_background_binance_thread();
- // void gui_render_draw();
+  void kickoff_background_yahoo_thread();
 
-//switches 
+  void cycle_for_sdl();
+  void cycle_for_glfw(); 
+
+  void gui_render_draw();
+  void join_active_threads(); 
+//switches
 
  inline static bool shutdown_signa = false;
- inline static bool halt_signal    = false; 
- inline static bool window_status  = true;   
+ inline static bool halt_signal    = false;
+ inline static bool window_status  = true;
 
-  ///handle a
-  bool stop = false;
-  char loop_n; 
 
-  
 //DEBUG
-  bool show_another_window = true;
- 
+  bool show_another_window = false;
+
 };
 
 

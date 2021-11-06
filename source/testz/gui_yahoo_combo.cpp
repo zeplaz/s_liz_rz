@@ -5,6 +5,7 @@
 #include "../yahoofinace/yah_req_threader.hpp"
 
 #include "../core/opengl_utility.hpp"
+#include "../core/engine.hpp"
 
 struct yahoo_MCP
 {
@@ -58,8 +59,18 @@ int main( int argc, char** argv)
 {
 	//startup
 	yahoo_MCP yah_MCP; 
-	std::thread background_thread_yah(std::ref(yah_MCP.yah_thead_worker));
+	//std::thread background_thread_yah(std::ref(yah_MCP.yah_thead_worker));
 
+
+
+	engine mengine; 
+    mengine.ignition();
+  //  mengine.load_testz_systems();
+
+    fmt::print("\n--->> main about to cycle\n");
+    mengine.cycle();
+    
+    mengine.shutdown();
 
 /*
 glm::vec4 clear_colouer { 0.3,0.3,0.4, 0.4};
@@ -110,6 +121,6 @@ bool show_another_window = true;
 
 //shutdown 
 	yah_MCP.shutdown();
-	background_thread_yah.join();
+//	background_thread_yah.join();
 	return 0; 
 }

@@ -7,22 +7,16 @@
 
 #include <string>
 
-enum gui_object
-{
+enum class Gui_Object_Def
+{ 
+ confirm_button,
+ submit_button,
+ cancel_button,
+ save_button,
+ close_button
 
 };
 
-
-struct gui_button
-{
-
-};
-
-template<typename... mixinz>
-struct gui_window : mixinz... 
-{
-
-};
 
 struct componet
 {
@@ -31,12 +25,27 @@ struct componet
 
 };  
 
+struct gui_button : public componet
+{
+	Gui_Object_Def button_type; 
+	
+
+};
+
+template<typename... mixinz>
+struct gui_windgets : public mixinz... 
+{
+
+};
+
+
+
 struct gui_compoent_paramz
 {	
-	int id; 
+	
 	std::string title = ""; 
-	bool has_text;
-	bool has_label;
+	bool has_text = false; 
+	bool has_label = false;
 	bool remain_open = true;
 	
 	std::string text; 

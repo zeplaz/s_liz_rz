@@ -8,7 +8,7 @@ THRID_PARTY_INCLUDE ="../3rd_party"
 IMGUI_INC           ="../3rd_party/imgui"
 IMGUI_BACKENDS_INC  ="../3rd_party/imgui/backends"
 
-OBJS = gui_yahoo_combo.o custom_hash.o curl_handler_yf.o parser_yah.o quote_bank.o quote_spot_yah.o opengl_utility.o im_gui_modifed_backends.o imgui.o  imgui_draw.o imgui_tables.o imgui_widgets.o imgui_impl_opengl3.o 
+OBJS = engine.o glfw_windowBuilder.o gui_yahoo_combo.o custom_hash.o curl_handler_yf.o parser_yah.o quote_bank.o quote_spot_yah.o opengl_utility.o im_gui_modifed_backends.o imgui.o  imgui_draw.o imgui_tables.o imgui_widgets.o imgui_impl_opengl3.o 
 FMT_INCLUDE = /usr/local/include/fmt
 
 
@@ -37,10 +37,16 @@ quote_bank.o: yahoofinace/quote_bank.cpp yahoofinace/quote_bank.hpp
 quote_spot_yah.o: yahoofinace/quote_spot_yah.cpp yahoofinace/quote_spot_yah.hpp
 	${CXX} ${CPPFLAGS} -c -g yahoofinace/quote_spot_yah.cpp
 
+#engine
+engine.o: core/engine.cpp core/engine.hpp
+	${CXX} ${CPPFLAGS} -c -g core/engine.cpp
 
 # render 
 opengl_utility.o: core/opengl_utility.cpp core/opengl_utility.hpp
 	${CXX} ${CPPFLAGS} -c -g core/opengl_utility.cpp
+
+glfw_windowBuilder.o: core/glfw_windowBuilder.cpp core/glfw_windowBuilder.hpp
+	${CXX} ${CPPFLAGS} -c -g core/glfw_windowBuilder.cpp	
 
 #imgui_mod_back
 im_gui_modifed_backends.o: gui/im_gui_modifed_backends.cpp gui/im_gui_modifed_backends.hpp core/opengl_utility.hpp
@@ -61,7 +67,7 @@ imgui_impl_opengl3.o: ../3rd_party/imgui/backends/imgui_impl_opengl3.cpp
 
 .PHONY : clean_render
 clean_render:
-	-rm gui_yahoo_combo.o opengl_utility.o
+	-rm gui_yahoo_combo.o opengl_utility.o glfw_windowBuilder.o 
 
 .PHONY : clean_modback
 clean_modback:
@@ -83,6 +89,10 @@ clean_yah:
 clean_parse:
 	-rm gui_yahoo_combo.o parser_yah.o	
 
+.PHONY : clean_eng
+clean_eng:
+	-rm engine.o 
+	
 .PHONY : clean
 clean :
 	-rm atomthreadtest $(OBJS)
