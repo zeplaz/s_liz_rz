@@ -17,8 +17,9 @@
 //#include <glbinding/Binding.h>  // Initialize with glbinding::Binding::initialize()
 
 
+#include "../utilityz/errorhandler.hpp"
 
-
+const glm::vec4 CLEAR_COLOUR_GLM  {0.45f, 0.55f, 0.60f, 1.00f}; 
 
 void APIENTRY GLAPIENTRY glDebugOutput(GLenum source,
                          GLenum type,
@@ -29,10 +30,29 @@ void APIENTRY GLAPIENTRY glDebugOutput(GLenum source,
                          const void *userParam);
 
 
-static void glfw_error_callback(int error, const char* description)
+[[maybe_unused]] static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
 }
 
+namespace SL_ZER
+{
+ inline ERRORCODE glew_check()
+ {
 
+ // glbinding::initialize([](const char* name) { return (glbinding::ProcAddress)glfwGetProcAddress(name); });
+
+    GLenum err = glewInit() != GLEW_OK;
+
+    if (err)
+    {   
+     fmt::print("\n ###->SERROR::glew_code::{},\n GLEW Error::{}\n,",err,glewGetErrorString(err));
+
+     fprintf(stderr, "Failed to initialize OpenGL loader!\n\n");
+     return GLEW_FAIL;
+    }
+    
+    return NO_ERROR;
+}
+}
 #endif

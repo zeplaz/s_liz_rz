@@ -207,3 +207,88 @@ void  imgui_glfw_ctler::ImGui_ImplGlfw_UpdateGamepads()
     else
         io.BackendFlags &= ~ImGuiBackendFlags_HasGamepad;
 }
+
+
+bool imgui_glfw_ctler::ImGui_ImplGlfw_Init_redux(GLFWwindow* window, bool install_callbacks, GlfwClientApi client_api)
+{
+
+    g_Time = 0.0;
+
+    // Setup backend capabilities flags
+    ImGuiIO& io = ImGui::GetIO();
+    io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;         // We can honor GetMouseCursor() values (optional)
+    io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;          // We can honor io.WantSetMousePos requests (optional, rarely used)
+    io.BackendPlatformName = "imgui_impl_glfw";
+
+    // Keyboard mapping. Dear ImGui will use those indices to peek into the io.KeysDown[] array.
+    io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
+    io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
+    io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
+    io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
+    io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
+    io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
+    io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
+    io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
+    io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
+    io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
+    io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
+    io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
+    io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
+    io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
+    io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
+    io.KeyMap[ImGuiKey_KeyPadEnter] = GLFW_KEY_KP_ENTER;
+    io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
+    io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
+    io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
+    io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
+    io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
+    io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
+
+    io.SetClipboardTextFn =  SL_ZER::clip::ImGui_ImplGlfw_SetClipboardText;
+    io.GetClipboardTextFn =  SL_ZER::clip::ImGui_ImplGlfw_GetClipboardText;
+    io.ClipboardUserData = window;
+#if defined(_WIN32)
+    io.ImeWindowHandle = (void*)glfwGetWin32Window(window);
+#endif
+
+    // Create mouse cursors
+    // (By design, on X11 cursors are user configurable and some cursors may be missing. When a cursor doesn't exist,
+    // GLFW will emit an error which will often be printed by the app, so we temporarily disable error reporting.
+    // Missing cursors will return NULL and our _UpdateMouseCursor() function will use the Arrow cursor instead.)
+    GLFWerrorfun prev_error_callback = glfwSetErrorCallback(NULL);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_Arrow] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_TextInput] = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_ResizeNS] = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_ResizeEW] = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_Hand] = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+#if GLFW_HAS_NEW_CURSORS
+    im_backend.g_MouseCursors[ImGuiMouseCursor_ResizeAll] = glfwCreateStandardCursor(GLFW_RESIZE_ALL_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_RESIZE_NESW_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_RESIZE_NWSE_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_NotAllowed] = glfwCreateStandardCursor(GLFW_NOT_ALLOWED_CURSOR);
+#else
+    im_backend.g_MouseCursors[ImGuiMouseCursor_ResizeAll] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+    im_backend.g_MouseCursors[ImGuiMouseCursor_NotAllowed] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+#endif
+    glfwSetErrorCallback(prev_error_callback);
+
+    // Chain GLFW callbacks: our callbacks will call the user's previously installed callbacks, if any.
+    im_backend.g_PrevUserCallbackMousebutton = NULL;
+    im_backend.g_PrevUserCallbackScroll = NULL;
+    im_backend.g_PrevUserCallbackKey = NULL;
+    im_backend.g_PrevUserCallbackChar = NULL;
+    if (install_callbacks)
+    {
+        im_backend.g_InstalledCallbacks = true;
+
+        im_backend.g_PrevUserCallbackMousebutton = glfwSetMouseButtonCallback(window,  SL_ZER::callbacks::ImGui_ImplGlfw_MouseButtonCallback);
+        im_backend.g_PrevUserCallbackScroll = glfwSetScrollCallback(window,  SL_ZER::callbacks::ImGui_ImplGlfw_ScrollCallback);
+        im_backend.g_PrevUserCallbackKey = glfwSetKeyCallback(window,  SL_ZER::callbacks::ImGui_ImplGlfw_KeyCallback);
+        im_backend.g_PrevUserCallbackChar = glfwSetCharCallback(window,  SL_ZER::callbacks::ImGui_ImplGlfw_CharCallback);
+    }
+
+    im_backend.g_ClientApi = client_api;
+    return true;
+}

@@ -3,11 +3,11 @@
 #include "engine.hpp"
 
 //#include "../analytic/binace_analytic_MCP.hpp"
-//#include "render.hpp"
+#include "render/render.hpp"
 
 
 #include "utilityz/locks.hpp"
-#include "glfw_windowBuilder.hpp"
+
 
 
 
@@ -30,13 +30,18 @@ an_proc.mprice_cmder.create_price_roof(MATIC_BUSD,1.22);*/
 }
 
 
-engine::engine()
-  {
-     mrender      = new render_MCP(this);
-    // analytic_MCP = new analytic_MCP;
-
-
+ void engine::config_render_window(char* flag)
+ {
+  if (strcmp ("-sdl", flag) == 0) {
+  SL_ZER::set_win_framework(WINDOW_FRAMWORK::SDL); 
   }
+  else if  (strcmp ("-glfw", flag) == 0) {
+  SL_ZER::set_win_framework(WINDOW_FRAMWORK::GLFW);  
+  }
+}
+
+
+  engine::engine() {}
 
 void engine::shutdown()
 {
@@ -48,7 +53,7 @@ void engine::shutdown()
   //ImGui::DestroyContext();
 
   //glfwDestroyWindow(mrender.window);
-  glfwTerminate();
+ // glfwTerminate();
   m_engine_status = Engine_Status::SHUTDOWN;
 }
 
@@ -60,7 +65,7 @@ ERRORCODE engine::ignition()
 
 
 
-    ERRORCODE co = this->launch_main_window();
+    ERRORCODE co;// = this->launch_main_window();
     if(co != NO_ERROR)
     {
       m_engine_status = Engine_Status::FAILURE;
@@ -85,6 +90,7 @@ void engine::kickoff_background_binance_thread()
   m_sym_online|= Systems_Online::BINACE_API;
 }
 
+/*
 
 
 void engine::gui_render_draw()
@@ -97,7 +103,6 @@ void engine::gui_render_draw()
 
 
      //  mgui.display(mrender.window);
-/*
 
         ImGui::Render();
         int display_w, display_h;
@@ -114,14 +119,14 @@ void engine::gui_render_draw()
         ///swap
         glfwSwapBuffers(mrender.window);
         ///
-        */
+      
 
-}
+}  */
 
 
 void engine::cycles_anlytics()
 {
-       if(0==cycle_count%50)
+       if(0==cycle_count%ANALYTIC_DUTY_CYCLE)
       {
         //std::cout <<"MAINTHREAD##-->testing alert sycle\n";
          //an_proc.cycle_prices_alerts_redux();
@@ -129,23 +134,7 @@ void engine::cycles_anlytics()
 
 }
 
-void engine::cycle_for_sdl()
-{
 
-
-}
-
-void engine::cycle_for_glfw()
-{
-
-  while (!shutdown_signa)
-   {
-      cycle_count++;
-      float current_frame = glfwGetime();
-      shutdown_signa = win_glfw->poll_to_close();
-
-   }
-}
 
 void engine::join_active_threads()
 {
@@ -161,7 +150,7 @@ void engine::join_active_threads()
     {
     if (yahoo_background_thread->joinable())
       {
-        mt::print("##->joinable..yahoo_background_thread\n");
+        fmt::print("##->joinable..yahoo_background_thread\n");
         yahoo_background_thread->join();
       }
     }
@@ -175,19 +164,13 @@ Engine_Status engine::cycle()
   fmt::print("\n---| engine::cycle()||\n");
 
 
-    if(mrender->win_framework==WINDOW_FRAMWORK::SDL)
-    {
-      this->cycle_for_sdl();
-    }
+  while (!shutdown_signa)
+   {
+      cycle_count++;
 
-    if(mrender->win_framework == WINDOW_FRAMWORK::GLFW)
-     {
-      this->cycle_for_glfw();
-     } 
-
-      shutdown();
-
-
+  }
+   
+    this->shutdown();
 
   return m_engine_status;
 }

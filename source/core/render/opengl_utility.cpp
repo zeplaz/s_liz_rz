@@ -52,3 +52,4 @@ void APIENTRY GLAPIENTRY glDebugOutput(GLenum source,
  } std::cout << std::endl;
  std::cout << std::endl;
 }
+

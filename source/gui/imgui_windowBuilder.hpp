@@ -25,8 +25,7 @@
 
 #include "gui_components_02.hpp"
 #include "im_gui_modifed_backends.hpp"
-
-
+#include "imgui_impl_sdl.h"
 
 
 extern const char* GUI_Symbols[];
@@ -94,18 +93,18 @@ struct im_gui_window_parmz
     };
 
 
+//class SDL_Window; 
+//class GLFWwindow; 
+//class SDL_Event; 
+
+
 class imgui_controler
 {
-    
-WINDOW_FRAMWORK win_framework; 
+  imgui_glfw_ctler glfw_ctrler;
 
 public : 
 ~imgui_controler(); 
-
-void set_window_framework(WINDOW_FRAMWORK wf)
-{
-    win_framework= wf; 
-}
+imgui_backend mimgui_backend;    
 
 inline void  im_context_create()
     {
@@ -113,19 +112,20 @@ inline void  im_context_create()
         ImGui::CreateContext();
     }
 
-inline void set_imgui_style()
+inline void set_style()
 {
       ImGui::StyleColorsDark();
 }
 
-void io_gui_config(const im_gui_window_parmz& parmz);
+void io_gui_config();
 
 void update_viewporting();
 
-void connect_sdl(SDL_Window* window, SDL_GLContext* gl_context, const char* glsl_version);
+void connect_sdl(SDL_Window* window, const char* glsl_version);
 
 void connect_glfw(GLFWwindow* window, const char* glsl_version);
 
+void process_SDL(SDL_Event* in_e); 
 
 };
 
@@ -133,7 +133,8 @@ class gui_widget
 {
 
 };
-class abstract_gui_widget_factory
+
+/*class abstract_gui_widget_factory
 {
   gui_widget operator() 
   {
@@ -142,7 +143,7 @@ class abstract_gui_widget_factory
     return gw; 
   }
 };
-
+*/
 
     /*
 

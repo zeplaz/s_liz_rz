@@ -45,6 +45,8 @@ void gui_mgmt::display( GLFWwindow* window )
     strcat(im_backend.g_GlslVersionString, "\n");
 }
 
+
+
 /*
 
 void render_gui_mgmt::shutdown(){

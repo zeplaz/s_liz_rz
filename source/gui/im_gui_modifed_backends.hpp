@@ -3,7 +3,7 @@
 #ifndef SLIZERZ_01_IM_GUI_MODIFED_BACKENDZ_01_HPP
 #define SLIZERZ_01_IM_GUI_MODIFED_BACKENDZ_01_HPP
 
-#include "../core/opengl_utility.hpp"
+#include "../core/render/opengl_utility.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
@@ -23,11 +23,11 @@ class imgui_backend
    //     friend class gui_mgmt;
 public: 
     
-    inline static char*        glsl_version = "#version 450";
+    inline static char*        glsl_version = "#version 460";
     inline static char         g_GlslVersionString[32] = "";
     inline static GLuint       g_FontTexture = 0;
     inline static GLuint       g_ShaderHandle = 0, g_VertHandle = 0, g_FragHandle = 0;
-    inline static int          g_AttribLERRORCODE launch_glfw_main_window()ocationTex = 0, g_AttribLocationProjMtx = 0;
+    inline static int g_AttribLocationTex = 0, g_AttribLocationProjMtx = 0;
     inline static int          g_AttribLocationPosition = 0, g_AttribLocationUV = 0, g_AttribLocationColor = 0;
     inline static unsigned int g_VboHandle = 0, g_ElementsHandle = 0;
     /*----*/
@@ -55,6 +55,7 @@ public:
 
 struct imgui_glfw_ctler
 {
+float  g_Time = 0.0;
  imgui_backend im_backend;
 
  void ImGui_ImplGlfw_UpdateMousePosAndButtons(GLFWwindow* g_Window);  
@@ -63,7 +64,7 @@ struct imgui_glfw_ctler
 
 void ImGui_ImplGlfw_UpdateGamepads();
  
-bool ImGui_ImplGlfw_Init_redux(GLFWwindow* window, bool install_callbacks, GlfwClientApi client_api);
+ bool ImGui_ImplGlfw_Init_redux(GLFWwindow* window, bool install_callbacks, GlfwClientApi client_api);
 
 };
 

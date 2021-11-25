@@ -210,14 +210,14 @@ namespace Utility
 {
 
 
-static void Print_Error(ERRORCODE inerror, Error_Triage et) 
+[[maybe_unused]] static void Print_Error(ERRORCODE inerror, Error_Triage et) 
 {
   Error_Rangler er; 
 
   er.print_EC_ET(inerror, et);
 }
 
-static void Print_Error(ERRORCODE inerror, Error_Triage et, const char* note) 
+[[maybe_unused]] static void Print_Error(ERRORCODE inerror, Error_Triage et, const char* note) 
 {
   Error_Rangler er; 
 

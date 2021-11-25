@@ -71,6 +71,8 @@ template<>
 
 #define DEFAULT_WIN_HIGHT  1000
 #define DEFAULT_WIN_WIDTH  1000
+
+constexpr unsigned int ANALYTIC_DUTY_CYCLE = 50;     
 const std::string MAIN_WIN_TITLE = "Main_Window_s_liz_rz";
 
 //Forward declrations//
@@ -106,8 +108,12 @@ struct engine
   engine();
   void load_testz_systems();
   ERRORCODE ignition();
+
+  void config_render_window(char* flag);
+  
   void shutdown();
   Engine_Status cycle();
+  void cycles_anlytics();
   ERRORCODE launch_main_window();
 
 
@@ -116,10 +122,10 @@ private:
   void kickoff_background_binance_thread();
   void kickoff_background_yahoo_thread();
 
-  void cycle_for_sdl();
-  void cycle_for_glfw(); 
+  //void cycle_for_sdl();
+  //void cycle_for_glfw(); 
 
-  void gui_render_draw();
+  //void gui_render_draw();
   void join_active_threads(); 
 //switches
 
