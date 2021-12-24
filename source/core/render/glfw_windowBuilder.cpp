@@ -1,7 +1,7 @@
 
 
 #include "glfw_windowBuilder.hpp"
-
+#include "../SL_ZER_namespace_def01.hpp"
 
 window_glfw::~window_glfw()
   {
@@ -22,7 +22,7 @@ ERRORCODE window_glfw::init()
     return co;
   }
 
-  co = this->create_window(DEFAULT_MAIN_VEWPORT_WIDTH,DEFAULT_MAIN_VEWPORT_HIGHT,"MAIN_WIN GLFW_TITLE");
+  co = this->create_window(SL_ZER::DEFAULT_MAIN_VEWPORT_WIDTH,SL_ZER::DEFAULT_MAIN_VEWPORT_HIGHT,"MAIN_WIN GLFW_TITLE");
 
    if(co != NO_ERROR)
   {
@@ -160,7 +160,10 @@ void glfw_window_imp::render()
     if(base_window::Resized == true)
         {window->if_resized();}
         
-        glClearColor(CLEAR_COLOUR_GLM.x * CLEAR_COLOUR_GLM.w, CLEAR_COLOUR_GLM.y * CLEAR_COLOUR_GLM.w, CLEAR_COLOUR_GLM.z * CLEAR_COLOUR_GLM.w, CLEAR_COLOUR_GLM.w);
+        glClearColor(SL_ZER::CLEAR_COLOUR_GLM.x * SL_ZER::CLEAR_COLOUR_GLM.w, 
+                     SL_ZER::CLEAR_COLOUR_GLM.y * SL_ZER::CLEAR_COLOUR_GLM.w, 
+                     SL_ZER::CLEAR_COLOUR_GLM.z * SL_ZER::CLEAR_COLOUR_GLM.w,
+                      SL_ZER::CLEAR_COLOUR_GLM.w);
         glClear(GL_COLOR_BUFFER_BIT);
       
         //CALL IMGUI SHDRAW HERE!!!

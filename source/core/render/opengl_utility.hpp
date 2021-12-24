@@ -19,7 +19,10 @@
 
 #include "../utilityz/errorhandler.hpp"
 
-const glm::vec4 CLEAR_COLOUR_GLM  {0.45f, 0.55f, 0.60f, 1.00f}; 
+
+namespace SL_ZER{
+   const glm::vec4 CLEAR_COLOUR_GLM  {0.45f, 0.55f, 0.60f, 1.00f}; 
+}
 
 void APIENTRY GLAPIENTRY glDebugOutput(GLenum source,
                          GLenum type,

@@ -117,8 +117,7 @@ constexpr long MAX_PLT_ARRAY = 300000;
 *
 */
 
-//constexpr const int DEFAULT_WIDTH = 1280;
-//constexpr const int DEFAULT_HIGHT = 720;
+
 
 
 

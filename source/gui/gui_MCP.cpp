@@ -36,6 +36,9 @@ void gui_mgmt::display( GLFWwindow* window )
 		test_ispb.write();
 	}
 
+
+
+/*
 	void  gui_mgmt::im_set_backend_opengl(const GLFWwindow* window)
 {
     im_backend.ImGui_ImplGlfw_Init_redux(window, true, GlfwClientApi_OpenGL);
@@ -43,7 +46,7 @@ void gui_mgmt::display( GLFWwindow* window )
     IM_ASSERT((int)strlen(im_backend.glsl_version) + 2 < IM_ARRAYSIZE(im_backend.g_GlslVersionString));
     strcpy(im_backend.g_GlslVersionString, im_backend.glsl_version);
     strcat(im_backend.g_GlslVersionString, "\n");
-}
+}*/
 
 
 

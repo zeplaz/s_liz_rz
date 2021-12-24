@@ -1,7 +1,5 @@
 /*
-
 //render
-
 */
 
 #ifndef SLAZERZ_01_RENDER_MCP_001_HPP
@@ -9,10 +7,9 @@
 
 
 
-
-
 /*
-switch to select glfw or sdl
+switch to select defualt glfw or sdl can be swtiched at runtime, (pref startup)
+by passing arguments -sdl or -glfw in command line!
 
 #if defined (USE_GLFW)
 
@@ -24,11 +21,15 @@ switch to select glfw or sdl
 //#define USE_GLFW
 
 
+
 #include "base_window.hpp"
 #include "../utilityz/errorhandler.hpp"
 
 #include <memory>
 #include <mutex>
+
+
+
 
 
 //forward deleclrations
@@ -48,16 +49,27 @@ struct render_MCP
 	engine*  mengine = nullptr;
 	abstract_window_implmentor* window_imp = nullptr;
 	imgui_controler* imgui_ctl = nullptr;
+
+	ERRORCODE status = NO_ERROR; 
 	
 	static std::atomic<render_MCP*> instance;
     static std::mutex render_mutex;
-	  
+	
+
+    bool defaulted_window = true; 
+
+
 	public : 
 
 	inline void set_engine(engine& eng) 
 	{
 		mengine = &eng;
-	}  
+	} 
+
+	inline ERRORCODE get_status()
+	{
+		return status; 
+	} 
 	
 	static render_MCP* get_instance();
 
@@ -69,13 +81,16 @@ struct render_MCP
 
 	bool display();
 
-	void shutdown();
+	//void shutdown();
+	void shutdown_window();
+	void shutdown_gui();
 
 	void set_gl_debug_context(); 
 
 	void launch_imgui();
 
 	void window_render();
+	bool poll_window_shutdown(); 
 
 	void gui_draw(); 
 	

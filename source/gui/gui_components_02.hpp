@@ -6,8 +6,9 @@
 
 
 #include <string>
+ #include <variant>
 
-enum class Gui_Object_Def
+enum class Button_Type 
 { 
  confirm_button,
  submit_button,
@@ -17,26 +18,18 @@ enum class Gui_Object_Def
 
 };
 
+enum class Gui_widget_Type
+{
+	Text_PopUp,
+	User_Text_Input
+};
+
 
 struct componet
 {
-    int id;
+    E_ID id; 
     std::string name;
-
 };  
-
-struct gui_button : public componet
-{
-	Gui_Object_Def button_type; 
-	
-
-};
-
-template<typename... mixinz>
-struct gui_windgets : public mixinz... 
-{
-
-};
 
 
 
@@ -48,10 +41,32 @@ struct gui_compoent_paramz
 	bool has_label = false;
 	bool remain_open = true;
 	
-	std::string text; 
+	std::string text =""; 
 	
 };
 
+
+struct gui_compoent : public compoent
+{
+	gui_compoent_paramz paramz; 
+};
+
+template<typename... mixinz>
+struct gui_widgets : public  mixinz... 
+{
+	
+
+};
+
+struct gui_button : public gui_compoent 
+{	
+	Button_Type button_type; 
+};
+
+struct text_input: public gui_compoent 
+{	
+	std::string received_text; 
+};
 
 
 

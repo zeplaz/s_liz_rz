@@ -1,7 +1,7 @@
 #makefile test error code
 CXX = g++
 CPPFLAGS = -std=c++20 -pg -fconcepts-ts  -Wall -pedantic 
-LINKERFLAG =  -lcurl -lfmt -lpthread -lGLEW -lglfw -lGLU -lSDL2 -lGL -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl 
+LINKERFLAG =  -lcurl -lfmt -lpthread -lGLEW -lglfw -lGLU -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf -lGL -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl 
 LIBSTD06   =  /usr/lib64/libstdc++.so.6
 
 THRID_PARTY_INCLUDE ="../3rd_party" 
@@ -10,7 +10,11 @@ IMGUI_BACKENDS_INC  ="../3rd_party/imgui/backends"
 
 FMT_INCLUDE = /usr/local/include/fmt
 
-OBJS = ut_windows_01.o engine.o render.o SDL_window.o glfw_windowBuilder.o opengl_utility.o im_gui_modifed_backends.o imgui.o imgui_draw.o imgui_tables.o imgui_widgets.o imgui_impl_opengl3.o imgui_windowBuilder.o imgui_impl_sdl.o
+CORE = engine.o
+RENDER =  render.o SDL_window.o sdl_window_imp.o glfw_windowBuilder.o opengl_utility.o
+IMGUI_LIB = imgui.o imgui_draw.o imgui_tables.o imgui_widgets.o imgui_impl_opengl3.o imgui_impl_sdl.o
+GUI = imgui_controler.o im_gui_modifed_backends.o 
+OBJS = ut_windows_01.o  ${CORE} ${RENDER} ${GUI} ${IMGUI_LIB} 
 
 windowtest: ${OBJS}
 	${CXX} ${CPPFLAGS} ${OBJS} -L$(LIBSTD06) ${LINKERFLAG}  -o windowtest 
@@ -36,12 +40,12 @@ glfw_windowBuilder.o: core/render/glfw_windowBuilder.cpp core/render/glfw_window
 SDL_window.o: core/render/SDL_window.cpp core/render/SDL_window.hpp core/render/opengl_utility.hpp
 	${CXX} ${CPPFLAGS} -c -g core/render/SDL_window.cpp 
 
-
+sdl_window_imp.o: core/render/sdl_window_imp.cpp core/render/SDL_window.hpp core/render/opengl_utility.hpp
+	${CXX} ${CPPFLAGS} -c -g core/render/sdl_window_imp.cpp 	
 #GUI
-imgui_windowBuilder.o: gui/imgui_windowBuilder.hpp gui/imgui_windowBuilder.cpp 
-		${CXX} ${CPPFLAGS} -I${IMGUI_INC} -I${IMGUI_BACKENDS_INC} -c -g gui/imgui_windowBuilder.cpp 
+imgui_controler.o: gui/imgui_controler.hpp gui/imgui_controler.cpp 
+	${CXX} ${CPPFLAGS} -I${IMGUI_INC} -I${IMGUI_BACKENDS_INC} -c -g gui/imgui_controler.cpp 
 
-#imgui_mod_back
 im_gui_modifed_backends.o: gui/im_gui_modifed_backends.cpp gui/im_gui_modifed_backends.hpp core/render/opengl_utility.hpp
 	${CXX} ${CPPFLAGS} -I${IMGUI_INC} -I${IMGUI_BACKENDS_INC} -c -g gui/im_gui_modifed_backends.cpp
 
@@ -59,6 +63,10 @@ imgui_impl_sdl.o: ../3rd_party/imgui/backends/imgui_impl_sdl.cpp
 imgui_impl_opengl3.o: ../3rd_party/imgui/backends/imgui_impl_opengl3.cpp
 	${CXX} ${CPPFLAGS} -I${IMGUI_INC} -I${IMGUI_BACKENDS_INC} -c -g ../3rd_party/imgui/backends/imgui_impl_opengl3.cpp
 
+.PHONY : clean_all
+clean_all :
+	-rm windowtest  $(OBJS)
+
 .PHONY : clean
 clean :
-	-rm windowtest  $(OBJS)
+	-rm windowtest  ut_windows_01.o  ${CORE} ${RENDER} ${GUI}

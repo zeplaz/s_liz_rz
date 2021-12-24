@@ -8,26 +8,7 @@
 #include <string>
 #include "../utilityz/errorhandler.hpp"
 
-enum class WINDOW_FRAMWORK
-{
-SDL,
-GLFW
-};
 
-namespace SL_ZER
-{
-	inline static WINDOW_FRAMWORK win_framework; 
-
-	inline static void set_win_framework(WINDOW_FRAMWORK const& win)
-	{
-		win_framework = win; 
-	}
-}
-
-	constexpr int DEFAULT_MAIN_VEWPORT_WIDTH  = 700;
-	constexpr int DEFAULT_MAIN_VEWPORT_HIGHT  = 700;
-	
-	constexpr int CLEAR_COLOURS_INT[] = {27,52,16,255};
 
 //struct abstract_window_implmentor; 
 class base_window
@@ -57,7 +38,7 @@ class base_window
 
 	protected : 
 	//base_window() = delete; 
-	const char* glsl_version = "#version 460";
+	
 
 };
 

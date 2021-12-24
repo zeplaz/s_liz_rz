@@ -38,8 +38,17 @@ int main(int argc, char** argv)
 {
 
     engine eng; 
+    if(argc > 1)
+    {
+      fmt::print("NUM argc:{}\n", argv[1]);
 
+      eng.config_render_window(argv[1]);  
+    }
 
+    eng.ignition(); 
+
+    eng.cycle(); 
+    
 
 return 0;
 

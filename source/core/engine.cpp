@@ -5,10 +5,9 @@
 //#include "../analytic/binace_analytic_MCP.hpp"
 #include "render/render.hpp"
 
-
 #include "utilityz/locks.hpp"
 
-
+#include "SL_ZER_namespace_def01.hpp"
 
 
 void engine::load_testz_systems()
@@ -32,12 +31,23 @@ an_proc.mprice_cmder.create_price_roof(MATIC_BUSD,1.22);*/
 
  void engine::config_render_window(char* flag)
  {
-  if (strcmp ("-sdl", flag) == 0) {
-  SL_ZER::set_win_framework(WINDOW_FRAMWORK::SDL); 
+  if (strcmp ("-sdl", flag) == 0) 
+  {
+  SL_ZER::set_win_framework(SL_ZER::WINDOW_FRAMWORK::SDL); 
+  SL_ZER::RUNTIME_FRAMWORK_SET = true; 
+  #ifdef DEBUG_01
+  fmt::print("=> win framwork set to SDL\n"); 
+  #endif
+  return; 
   }
-  else if  (strcmp ("-glfw", flag) == 0) {
-  SL_ZER::set_win_framework(WINDOW_FRAMWORK::GLFW);  
+  else if  (strcmp ("-glfw", flag) == 0) 
+  {
+  SL_ZER::set_win_framework(SL_ZER::WINDOW_FRAMWORK::GLFW);  
+  SL_ZER::RUNTIME_FRAMWORK_SET = true; 
+    fmt::print("=> win framwork set to glfw\n"); 
+  return; 
   }
+  fmt::print("ERROR FLAG INVAILDED< USE -sdl or -glfw are currntly only supported. |{}| is invalied\n", flag); 
 }
 
 
@@ -48,9 +58,21 @@ void engine::shutdown()
   fmt::print("\nattemping shutdown... load atomic false\n");
   //an_proc.back_binace_oper.keep_binance_runing.store(false);
 
+
+  if((m_sym_online & Systems_Online::IM_GUI) == Systems_Online::IM_GUI)
+{  
+  mrender->shutdown_gui();
+  m_sym_online &= ~Systems_Online::IM_GUI;  
+}
+
+  if((m_sym_online & Systems_Online::RENDERER) == Systems_Online::RENDERER)
+  {
+    mrender->shutdown_window(); 
+    m_sym_online &= ~Systems_Online::RENDERER;  
+  }
+
   window_status = false;
-  //ImGui_ImplOpenGL3_Shutdown();
-  //ImGui::DestroyContext();
+
 
   //glfwDestroyWindow(mrender.window);
  // glfwTerminate();
@@ -63,20 +85,20 @@ ERRORCODE engine::ignition()
 {
   m_engine_status = Engine_Status::IGNITION;
 
+    mrender = render_MCP::get_instance(); 
+    mrender->configure(); 
 
+    ERRORCODE co = mrender->launch_main_window();
 
-    ERRORCODE co;// = this->launch_main_window();
     if(co != NO_ERROR)
     {
       m_engine_status = Engine_Status::FAILURE;
       return co;
     }
+    m_sym_online|= Systems_Online::RENDERER;
 
 
-  m_sym_online|= Systems_Online::RENDERER;
-
-
-  //mgui.setup_imgui(mrender.window);
+  mrender->launch_imgui(); 
   m_sym_online|= Systems_Online::IM_GUI;
 
   //this->kickoff_background_binance_thread();
@@ -167,6 +189,8 @@ Engine_Status engine::cycle()
   while (!shutdown_signa)
    {
       cycle_count++;
+      mrender->window_render();
+      shutdown_signa = mrender->poll_window_shutdown();
 
   }
    

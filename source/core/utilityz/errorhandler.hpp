@@ -7,7 +7,6 @@
   BASE DEFINE FOR POSIOING EVEYTHING WITH DEBUGO LEVEL 1 YAH!
 */
 #define DEBUG_01
-
 //#define DEBUG_02
 
 #include "error_MSG.hpp"
